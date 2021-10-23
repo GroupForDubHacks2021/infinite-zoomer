@@ -22,6 +22,7 @@ public class PaintCanvas extends JComponent {
         this.image = createImage(getWidth(), getHeight());
         this.graphics = (Graphics2D) this.image.getGraphics();
         graphics.setPaint(Color.black);
+        graphics.drawImage(image, 0, 0, null);
         
         addMouseListener(new MouseAdapter() {
             public void pressDown(MouseEvent m) {

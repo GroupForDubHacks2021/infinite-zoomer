@@ -12,7 +12,15 @@ import java.util.Scanner;
 
 public class ClientHandler extends Thread {
     // TODO: Find the HTML directory???
-    private static final String PATH_TO_HTML = "app/src/resources/html";
+    private static final String PATH_TO_HTML = "./app/src/main/resources/html";
+    private static final String ERROR_404_MESSAGE = "<!DOCTYPE html>" +
+            "<html>" +
+            "<head><title>404 Error</title></head>" +
+            "<body>" +
+            "<h1>404: File Not Found</h1>" +
+            "<a href='/index.html'>Back to the app!</a>" +
+            "</body>" +
+            "</html>";
 
     private final Scanner mInput;
     private final PrintWriter mOutput;
@@ -31,9 +39,15 @@ public class ClientHandler extends Thread {
     private void sendFile(File file) {
         // Handle 404 error case.
         if (file == null) {
+            System.out.println("404 Error!");
             mOutput.println("HTTP/1.1 404 ERROR");
             mOutput.println("Content-type: text/html");
-
+            mOutput.printf("Content-length: %d%n", ERROR_404_MESSAGE.length() + 2);
+            mOutput.println();
+            mOutput.println();
+            mOutput.println(ERROR_404_MESSAGE);
+            mOutput.println();
+            mOutput.println();
         }
     }
 
@@ -67,17 +81,18 @@ public class ClientHandler extends Thread {
      */
     @Override
     public void run() {
-        String request = mInput.nextLine();
+        String request = mInput.nextLine().trim();
+        System.out.printf("Got a request: %s%n", request);
 
-        if (request.startsWith("HTTP/1.1 GET /index.html")) {
-            mOutput.println("HTTP/1.1 200 OK");
-            mOutput.println("Content-type: text/html");
+        if (request.startsWith("GET /")) {
+            sendFile(getFile(request));
         } else {
             // TODO: Remove this, it's for debugging
             System.out.println("Got a request!");
             System.out.println(request);
         }
 
+        mOutput.flush();
         mInput.close();
         mOutput.close();
     }
