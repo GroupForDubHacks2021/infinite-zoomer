@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/infinite-zoomer.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/AbstractGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/SwingGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/DrawingModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Rectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/SceneObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/HTMLServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+    <list id="0e90a23c-c6bd-4a61-8a8e-6769bc03e636" name="Changes by aditijain" comment="">
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+    </list>
+    <list id="39809b4d-67de-49c6-ae7b-ae087f5ac94b" name="Changes by jason" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +43,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -43,6 +61,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -54,7 +74,20 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="infinite_zoomer.App" />
+      <module name="infinite-zoomer.app.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="infinite_zoomer.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="16" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -64,6 +97,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Run" />
+      <item itemvalue="Application.App" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
