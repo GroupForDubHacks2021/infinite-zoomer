@@ -3,6 +3,7 @@
  */
 package infinite.zoomer;
 
+import infinite_zoomer.App;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
