@@ -6,16 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/index.html" afterDir="false" />
     </list>
-    <list id="0e90a23c-c6bd-4a61-8a8e-6769bc03e636" name="Changes by aditijain" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" afterDir="false" />
-    </list>
-    <list id="39809b4d-67de-49c6-ae7b-ae087f5ac94b" name="Changes by jason" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/PaintCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/PaintCanvas.java" afterDir="false" />
-    </list>
+    <list id="0e90a23c-c6bd-4a61-8a8e-6769bc03e636" name="Changes by aditijain" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,14 +42,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java">
-      <ranges>
-        <range start1="5" end1="5" start2="5" end2="6" changelist="0e90a23c-c6bd-4a61-8a8e-6769bc03e636" />
-        <range start1="8" end1="8" start2="9" end2="12" changelist="084547ed-647a-48ec-9214-6f6961261f53" />
-      </ranges>
-    </file>
   </component>
   <component name="ProjectId" id="1zvJp7j5dj3gqh277KEqtaDhr8i" />
   <component name="ProjectViewState">

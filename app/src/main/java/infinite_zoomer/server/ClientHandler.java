@@ -1,9 +1,6 @@
 package infinite_zoomer.server;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -39,7 +36,6 @@ public class ClientHandler extends Thread {
     private void sendFile(File file) {
         // Handle 404 error case.
         if (file == null) {
-            System.out.println("404 Error!");
             mOutput.println("HTTP/1.1 404 ERROR");
             mOutput.println("Content-type: text/html");
             mOutput.printf("Content-length: %d%n", ERROR_404_MESSAGE.length() + 2);
@@ -48,6 +44,32 @@ public class ClientHandler extends Thread {
             mOutput.println(ERROR_404_MESSAGE);
             mOutput.println();
             mOutput.println();
+
+            return;
+        }
+
+        mOutput.println("HTTP/1.1 200 OK");
+        mOutput.println("Content-type: text/html");
+        mOutput.printf("Content-length: %d%n", file.length() + 1);
+        mOutput.println();
+        mOutput.println();
+
+        try {
+            int len = (int) file.length();
+
+            if (len != file.length()) {
+                throw new IOException("File too large.");
+            }
+
+            FileReader r = new FileReader(file);
+            char[] buff = new char[len];
+
+            r.read(buff);
+            mOutput.write(buff);
+            r.close();
+        } catch (IOException ex) {
+            System.err.println("Unable to read file.");
+            ex.printStackTrace();
         }
     }
 
@@ -88,10 +110,11 @@ public class ClientHandler extends Thread {
             sendFile(getFile(request));
         } else {
             // TODO: Remove this, it's for debugging
-            System.out.println("Got a request!");
+            System.out.println("Got an API request!");
             System.out.println(request);
         }
 
+        // Finish sending content.
         mOutput.flush();
         mInput.close();
         mOutput.close();
