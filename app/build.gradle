@@ -31,5 +31,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'infinite.zoomer.App'
+    mainClass = 'infinite_zoomer.App'
 }

@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/HTMLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/HTMLServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/SceneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/AppTest.java" afterDir="false" />
     </list>
-    <list id="e3ef1c1b-5092-4b30-a48e-3bcf0ddde565" name="Changes by aditijain" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,6 +108,9 @@
       <updated>1635022810417</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
