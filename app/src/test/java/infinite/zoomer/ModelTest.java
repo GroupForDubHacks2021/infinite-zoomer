@@ -26,6 +26,8 @@ public class ModelTest {
         Circle circle = new Circle(new Point2D(0.0, 0.0), 3.0);
         assertEquals((int) circle.distanceSquared(new Point2D(0.0, 0.0)), 0);
         assertEquals((int) circle.distanceSquared(new Point2D(3.0, 0.0)), 9);
+        assertTrue(circle.extendsOutside(new Circle(new Point2D(1.0, 1.0), 0.1)));
+        assertFalse(circle.extendsOutside(new Circle(new Point2D(1.0, 1.0), 100)));
         //assertTrue(circle.extendsOutside(new Circle(new Point2D())));
     }
 }

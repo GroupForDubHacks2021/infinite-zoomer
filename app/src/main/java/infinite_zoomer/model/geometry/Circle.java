@@ -33,6 +33,11 @@ public class Circle {
             return true;
         }
 
+        // If we're bigger than the other, we definitely extend outside it.
+        if (r > other.r) {
+            return true;
+        }
+
         //TODO: This math might not be correct.
 
         double dr = Math.max(r, other.r) - Math.min(r, other.r);
