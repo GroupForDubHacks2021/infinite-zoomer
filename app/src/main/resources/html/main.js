@@ -4,6 +4,9 @@ import { Stroke } from "./Stroke.js";
 import { Point } from "./Point.js";
 import { ZoomController } from "./ZoomController.js";
 
+const WHEEL_DELTA_MODE_LINE = 1;
+const WHEEL_DELTA_MODE_PAGE = 2;
+
 /// An async function that resolves after a short amount of time.
 /// It uses requestAnimationFrame, so the browser can make this take
 /// longer to complete if, say, the user isn't looking at the tab.
@@ -79,18 +82,32 @@ async function main()
         }
     };
 
-    /// Given a PointerEvent, convert it to a point.
-    const eventToPoint = (ev) => {
+    const eventToUnzoomedPoint = (ev) => {
         // Get location of the target element (our canvas)
         const bbox = canvas.getBoundingClientRect();
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        const x = (event.clientX - bbox.left)/zoom - viewportPosition.x;
-        const y = (event.clientY - bbox.top)/zoom - viewportPosition.y;
+        const x = event.clientX - bbox.left;
+        const y = event.clientY - bbox.top;
 
         return new Point(x, y, (ev.pressure || 0.5) / zoom);
     };
+
+    /// Given a PointerEvent, convert it to a point in the zoomed canvas
+    const eventToPoint = (ev) => {
+        let result = eventToUnzoomedPoint(ev);
+        // Get location of the target element (our canvas)
+        const bbox = canvas.getBoundingClientRect();
+
+        // x is in page coordinates, so we need to subtract the
+        // canvas' distance from the left of the page
+        result.x = result.x/zoom - viewportPosition.x;
+        result.y = result.y/zoom - viewportPosition.y;
+
+        return result;
+    };
+
 
     const zoomTo = (newZoom, center) => {
         viewportPosition.x -= center.x / zoom;
@@ -109,6 +126,35 @@ async function main()
 
         render();
     };
+
+    canvas.addEventListener("wheel", (ev) => {
+        ev.preventDefault();
+
+        let delta = ev.deltaY;
+
+        if (ev.deltaMode == WHEEL_DELTA_MODE_LINE) {
+            delta *= 3;
+        } else if (ev.deltaMode == WHEEL_DELTA_MODE_PAGE) {
+            delta *= 6;
+        } else {
+            delta /= 100;
+        }
+
+        if (delta == 0) {
+            return;
+        }
+
+        console.log(delta);
+
+        if (delta < 0) {
+            delta = 1/(1 + Math.abs(delta));
+        } else if (delta < 1) {
+            delta += 1;
+        }
+
+        zoomTo(zoom * delta, eventToUnzoomedPoint(ev));
+        render();
+    });
 
     // For multi-touch
     let zoomGesture = new ZoomController();
@@ -135,7 +181,7 @@ async function main()
         } else {
             stroke = null;
             zoomGesture = new ZoomController(zoom);
-            zoomGesture.onPointerMove(ev.pointerId, new Point(ev.clientX, ev.clientY));
+            zoomGesture.onPointerMove(ev.pointerId, eventToUnzoomedPoint(ev));
         }
 
         pointerDownCount ++;
@@ -159,7 +205,7 @@ async function main()
             // We're zooming!
             let oldZoomCenter = zoomGesture.getCenter();
             let pointerCount = zoomGesture.getPointerCount();
-            zoomGesture.onPointerMove(ev.pointerId, new Point(ev.clientX, ev.clientY));
+            zoomGesture.onPointerMove(ev.pointerId, eventToUnzoomedPoint(ev));
 
             if (pointerCount >= 2) {
                 let zoomCenter = zoomGesture.getCenter();
