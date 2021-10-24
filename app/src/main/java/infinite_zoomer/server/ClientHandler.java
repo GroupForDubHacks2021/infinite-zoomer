@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class ClientHandler extends Thread {
     // TODO: Find the HTML directory???
     private static final String PATH_TO_HTML = "./app/src/main/resources/html";
+    private static final String ALTERNATE_PATH_TO_HTML = "./src/main/resources/html";
     private static final String ERROR_404_MESSAGE = "<!DOCTYPE html>" +
             "<html>" +
             "<head><title>404 Error</title></head>" +
@@ -88,7 +89,15 @@ public class ClientHandler extends Thread {
      */
     private File getFile(String requestName) {
         File htmlDir = new File(PATH_TO_HTML);
+
+        if (!htmlDir.exists()) {
+            htmlDir = new File(ALTERNATE_PATH_TO_HTML);
+        }
+
         assert(htmlDir.isDirectory());
+
+        System.out.println("Current directory: ");
+        System.out.println(System.getProperty("user.dir"));
 
         Matcher matcher = GET_REQUEST_PATTERN.matcher(requestName);
         if (matcher.find()) {
