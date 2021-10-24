@@ -12,21 +12,27 @@ public class  Line extends SceneObject {
     public final Color color;
     public final double thickness;
 
+    private final Circle mBoundingCircle;
+
     public Line(Point2D start, Point2D end, Color color, double thickness) {
         this.start = start;
         this.end = end;
         this.color = color;
         this.thickness = thickness;
+
+        Point2D center = new Point2D((this.start.x + this.end.x) / 2, (this.start.y + this.end.y) / 2);
+        double radius = Math.sqrt(this.start.distanceSquared(this.end));
+        mBoundingCircle = new Circle(center, radius);
     }
 
     @Override
-    boolean isWithin(Circle r) {
-        if (r.contains(start) || r.contains(end)) {
-            return true;
-        }
+    public boolean isWithin(Circle r) {
+        // TODO: Use a better method of checking this.
+        return mBoundingCircle.intersects(r);
+    }
 
-        // TODO Check interior points of line.
-
-        return false;
+    @Override
+    public Circle getBoundingCircle() {
+        return mBoundingCircle;
     }
 }

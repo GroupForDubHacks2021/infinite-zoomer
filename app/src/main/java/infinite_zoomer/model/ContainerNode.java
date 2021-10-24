@@ -1,7 +1,6 @@
 package infinite_zoomer.model;
 
 import infinite_zoomer.model.geometry.Circle;
-import infinite_zoomer.model.geometry.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +10,20 @@ import java.util.List;
  * by allowing zoom to be relative to a bounding circle (that may have a parent circle, etc.)
  */
 
-public class BoundingCircle extends SceneObject {
+public class ContainerNode extends SceneObject {
     private List<SceneObject> mChildren;
-    private BoundingCircle mParent = null;
-    private Circle region;
+    private ContainerNode mParent = null;
+    private Circle mRegion;
 
-    public BoundingCircle() {
+    public ContainerNode() {
         mChildren = new ArrayList<>();
     }
 
     public void addChild(SceneObject child) {
         child.setParent(this);
         mChildren.add(child);
+
+
     }
 
     @Override
@@ -39,19 +40,28 @@ public class BoundingCircle extends SceneObject {
     }
 
     @Override
-    List<SceneObject> getLeavesInRegion(Circle r) {
+    public List<SceneObject> getLeavesInRegion(Circle r) {
         List<SceneObject> result = new ArrayList<>();
         List<SceneObject> applicableChildren = getChildrenInRegion(r);
-        
+
         for (SceneObject child : applicableChildren) {
             result.addAll(child.getLeavesInRegion(r));
         }
-        
+
         return result;
     }
 
     @Override
-    boolean isWithin(Circle c) {
-        return c.intersects(region);
+    public Circle getBoundingCircle() {
+        return mRegion;
+    }
+
+    @Override
+    public boolean isWithin(Circle c) {
+        if (mRegion == null) {
+            return false;
+        }
+
+        return c.intersects(mRegion);
     }
 }

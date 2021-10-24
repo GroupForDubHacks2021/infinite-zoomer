@@ -11,14 +11,14 @@ import java.util.List;
 
 public abstract class SceneObject {
     // TODO: Abstract scene object properties (e.g. getBoundingCircle?, isWithinViewport?)
-    abstract boolean isWithin(Circle r);
+    public abstract boolean isWithin(Circle r);
 
     /**
      * Get all direct children of this within a given region.
      * @param r Region to check for children in.
      * @return All direct children of this within r.
      */
-    List<SceneObject> getChildrenInRegion(Circle r) {
+    public List<SceneObject> getChildrenInRegion(Circle r) {
         return new ArrayList<>();
     }
 
@@ -29,7 +29,7 @@ public abstract class SceneObject {
      *
      * Should be overridden if this has children or does not render.
      */
-    List<SceneObject> getLeavesInRegion(Circle r) {
+    public List<SceneObject> getLeavesInRegion(Circle r) {
         List<SceneObject> result = new ArrayList<>();
 
         if (isWithin(r)) {
@@ -42,4 +42,6 @@ public abstract class SceneObject {
     public void setParent(SceneObject other) {
         // Override if this functionality is needed
     }
+
+    public abstract Circle getBoundingCircle();
 }

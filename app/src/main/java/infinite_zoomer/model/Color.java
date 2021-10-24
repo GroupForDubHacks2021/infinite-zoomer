@@ -1,7 +1,7 @@
 package infinite_zoomer.model;
 
 public class Color {
-    public float r, g, b, a;
+    public final float r, g, b, a;
 
     /**
      * Create a color from a four-tuple.

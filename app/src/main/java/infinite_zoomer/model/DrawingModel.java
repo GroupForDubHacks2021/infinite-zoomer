@@ -5,10 +5,8 @@
 
 package infinite_zoomer.model;
 import infinite_zoomer.model.geometry.Circle;
-import infinite_zoomer.model.geometry.Point2D;
 import infinite_zoomer.model.geometry.Rectangle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,10 +14,10 @@ import java.util.List;
  * Internal representation of the drawing (data on the canvas).
  */
 public class DrawingModel {
-    private BoundingCircle mRoot;
+    private ContainerNode mRoot;
 
     public DrawingModel() {
-        mRoot = new BoundingCircle();
+        mRoot = new ContainerNode();
     }
 
     public List<SceneObject> getObjectsInRegion(Rectangle region) {
