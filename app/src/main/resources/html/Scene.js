@@ -84,8 +84,8 @@ class Scene {
         const viewportPosition = this.viewportPosition;
 
         let centerPosition = new Point(
-            viewportPosition.x + this.viewportWidth / 2 * this.zoom,
-            viewportPosition.y + this.viewportHeight / 2 * this.zoom
+            viewportPosition.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
+            viewportPosition.y  * this.zoom + this.viewportHeight / 2 * this.zoom
         );
         let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom);
 

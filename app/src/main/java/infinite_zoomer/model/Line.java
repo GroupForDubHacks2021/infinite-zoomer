@@ -22,7 +22,7 @@ public class  Line extends SceneObject {
 
         Point2D center = new Point2D((this.start.x + this.end.x) / 2, (this.start.y + this.end.y) / 2);
         double radius = Math.sqrt(this.start.distanceSquared(this.end));
-        mBoundingCircle = new Circle(center, radius);
+        mBoundingCircle = new Circle(center, radius * 4.0);
     }
 
     @Override

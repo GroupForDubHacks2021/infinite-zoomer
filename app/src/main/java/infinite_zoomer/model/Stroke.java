@@ -92,11 +92,6 @@ public class Stroke extends SceneObject {
     }
 
     @Override
-    public List<SceneObject> getChildrenInRegion(Circle r) {
-        return null;
-    }
-
-    @Override
     public Circle getBoundingCircle() {
         return mBoundingCircle;
     }
@@ -111,10 +106,6 @@ public class Stroke extends SceneObject {
             } else {
                 mBoundingCircle = mBoundingCircle.unite(l.getBoundingCircle());
             }
-        }
-
-        if (mBoundingCircle == null) {
-            mBoundingCircle = new Circle(new Point2D(0, 0), 0.0);
         }
     }
 }
