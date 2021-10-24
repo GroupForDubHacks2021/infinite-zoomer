@@ -104,7 +104,19 @@ async function main()
         // TODO: Send stroke to the server.
         if (stroke != null) {
             sceneContent.push(stroke);
-            console.log("DONE");
+            console.log(stroke.serialize())
+
+            var http = new XMLHttpRequest();
+            var url = '/api?addstroke';
+            var params = 'orem=ipsum&name=binny';
+            http.open('POST', url, true);
+
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                if(http.readyState == 4 && http.status == 200) {
+                    alert(http.responseText);
+                }
+            }
+            http.send(params);
         }
 
         stroke = null;
