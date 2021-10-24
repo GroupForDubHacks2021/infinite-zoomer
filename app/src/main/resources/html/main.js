@@ -45,6 +45,24 @@ async function main()
         for (const elem of sceneContent) {
             elem.render(ctx, transform);
         }
+
+        // Render the current stroke, too
+        if (stroke) {
+            stroke.render(ctx, transform);
+        }
+    };
+
+    /// Given a PointerEvent, convert it to a point.
+    const eventToPoint = (ev) => {
+        // Get location of the target element (our canvas)
+        const bbox = canvas.getBoundingClientRect();
+
+        // x is in page coordinates, so we need to subtract the
+        // canvas' distance from the left of the page
+        const x = event.clientX - bbox.left;
+        const y = event.clientY - bbox.top;
+
+        return new Point(x, y);
     };
 
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onpointerdown
@@ -60,7 +78,7 @@ async function main()
 
         if (ev.isPrimary) {
             stroke = new Stroke();
-            stroke.addPoint(new Point(ev.clientX, ev.clientY));
+            stroke.addPoint(eventToPoint(ev));
         } else {
             // Initialize some zoom object?
         }
@@ -72,7 +90,7 @@ async function main()
         ev.preventDefault();
 
         if (stroke != null) {
-            stroke.addPoint(new Point(ev.clientX, ev.clientY));
+            stroke.addPoint(eventToPoint(ev));
         } else {
             // Zoom???
         }

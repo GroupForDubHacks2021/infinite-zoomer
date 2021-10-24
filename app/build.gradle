@@ -22,11 +22,6 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
-
-    // this dependency is for the text-to-speech google API
-    implementation platform('com.google.cloud:libraries-bom:23.1.0')
-
-    implementation 'com.google.cloud:google-cloud-texttospeech'
 }
 
 application {
