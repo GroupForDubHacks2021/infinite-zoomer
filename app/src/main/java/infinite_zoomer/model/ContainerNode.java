@@ -11,9 +11,9 @@ import java.util.List;
  */
 
 public class ContainerNode extends SceneObject {
-    private List<SceneObject> mChildren;
+    private final List<SceneObject> mChildren;
     private ContainerNode mParent = null;
-    private Circle mRegion;
+    private Circle mRegion = null;
 
     public ContainerNode() {
         mChildren = new ArrayList<>();
@@ -23,7 +23,24 @@ public class ContainerNode extends SceneObject {
         child.setParent(this);
         mChildren.add(child);
 
+        updateBoundingCircle();
 
+        // TODO: Re-balance if necessary (e.g. group children into sub-containers).
+        if (mRegion != null && mRegion.extendsOutside(mParent.getBoundingCircle())) {
+            mParent.updateBoundingCircle();
+        }
+    }
+
+    @Override
+    public void setParent(SceneObject parent) {
+        if (parent instanceof ContainerNode) {
+            mParent = (ContainerNode) parent;
+
+            updateBoundingCircle();
+        } else {
+            // TODO: Handle this gracefully
+            throw new Error("ContainerNodes can only be inside ContainerNodes.");
+        }
     }
 
     @Override
@@ -51,6 +68,10 @@ public class ContainerNode extends SceneObject {
         return result;
     }
 
+    public ContainerNode getParent() {
+        return mParent;
+    }
+
     @Override
     public Circle getBoundingCircle() {
         return mRegion;
@@ -63,5 +84,18 @@ public class ContainerNode extends SceneObject {
         }
 
         return c.intersects(mRegion);
+    }
+
+    @Override
+    protected void updateBoundingCircle() {
+        mRegion = null;
+
+        for (SceneObject obj : mChildren) {
+            if (mRegion == null) {
+                mRegion = obj.getBoundingCircle();
+            } else {
+                mRegion = mRegion.unite(obj.getBoundingCircle());
+            }
+        }
     }
 }

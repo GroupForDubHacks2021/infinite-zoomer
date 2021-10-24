@@ -14,4 +14,8 @@ public class Point2D {
 
         return dx * dx + dy * dy;
     }
+
+    public static Point2D midpoint(Point2D a, Point2D b) {
+        return new Point2D((a.x + b.x) / 2, (a.y + b.y) / 2);
+    }
 }

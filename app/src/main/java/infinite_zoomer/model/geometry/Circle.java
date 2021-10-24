@@ -28,6 +28,19 @@ public class Circle {
         return distanceSquared(p) <= r * r;
     }
 
+    public boolean extendsOutside(Circle other) {
+        if (other == null) {
+            return true;
+        }
+
+        //TODO: This math might not be correct.
+
+        double dr = Math.max(r, other.r) - Math.min(r, other.r);
+        Circle delta = new Circle(Point2D.midpoint(center, other.center), dr);
+
+        return intersects(other) && !intersects(delta);
+    }
+
     /**
      * @return A circle that contains this and other.
      */
@@ -36,7 +49,7 @@ public class Circle {
             return this;
         }
 
-        Point2D avgCenter = new Point2D((other.center.x + this.center.x) / 2, (other.center.y + this.center.y) / 2);
+        Point2D avgCenter = Point2D.midpoint(other.center, center);
         double fullRadius = this.r + other.r;
 
         return new Circle(avgCenter, fullRadius);

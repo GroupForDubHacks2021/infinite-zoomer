@@ -20,12 +20,30 @@ public class DrawingModel {
         mRoot = new ContainerNode();
     }
 
-    public List<SceneObject> getObjectsInRegion(Rectangle region) {
-        // Circles are easier to do collisions, etc. with:
-        return getObjectsInRegion(region.getBoundingCircle());
-    }
+    /**
+     * Get the container node that should be used for scene object lookup/storage
+     * in the given region.
+     *
+     * @param region Target area.
+     * @return ContainerNode that encompasses the area.
+     */
+    public ContainerNode getContainerForRegion(Circle region) {
+        ContainerNode current = mRoot;
 
-    public List<SceneObject> getObjectsInRegion(Circle region) {
-        return mRoot.getLeavesInRegion(region);
+        while (region.extendsOutside(current.getBoundingCircle()) && current.getParent() != null) {
+            // The current circle has no children; it's the prefect candidate.
+            if (current.getBoundingCircle() == null) {
+                return current;
+            }
+
+            current = current.getParent();
+        }
+
+        // We're at the point where a parent circle would be beneficial.
+        ContainerNode parent = new ContainerNode();
+        parent.addChild(current);
+        current = parent;
+
+        return current;
     }
 }

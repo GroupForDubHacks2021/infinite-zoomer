@@ -35,4 +35,8 @@ public class  Line extends SceneObject {
     public Circle getBoundingCircle() {
         return mBoundingCircle;
     }
+
+    @Override
+    protected void updateBoundingCircle() {
+    }
 }

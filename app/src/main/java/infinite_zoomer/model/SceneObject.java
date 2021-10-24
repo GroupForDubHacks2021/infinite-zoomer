@@ -43,5 +43,11 @@ public abstract class SceneObject {
         // Override if this functionality is needed
     }
 
+    public void addChild(SceneObject other) {
+        throw new Error("Not implemented");
+    }
+
     public abstract Circle getBoundingCircle();
+    
+    protected abstract void updateBoundingCircle();
 }

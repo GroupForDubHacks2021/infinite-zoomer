@@ -77,15 +77,16 @@ public class Stroke extends SceneObject {
         return mBoundingCircle;
     }
 
-    private void updateBoundingCircle() {
+    @Override
+    protected void updateBoundingCircle() {
         mBoundingCircle = null;
 
         for (Line l : mLines) {
             if (mBoundingCircle == null) {
                 mBoundingCircle = l.getBoundingCircle();
+            } else {
+                mBoundingCircle = mBoundingCircle.unite(l.getBoundingCircle());
             }
-
-            mBoundingCircle = mBoundingCircle.unite(l.getBoundingCircle());
         }
 
         if (mBoundingCircle == null) {

@@ -6,12 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/BoundingCircle.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/BoundingCircle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/ContainerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/ContainerNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/DrawingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/DrawingModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/SceneObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/SceneObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/geometry/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/geometry/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/geometry/Point2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/geometry/Point2D.java" afterDir="false" />
     </list>
     <list id="828a01f6-a27f-4397-af8d-209e73129aa2" name="Changes by jason" comment="" />
     <option name="SHOW_DIALOG" value="false" />
