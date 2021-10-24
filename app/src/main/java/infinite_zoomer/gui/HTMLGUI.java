@@ -58,8 +58,7 @@ public class HTMLGUI implements AbstractGUI {
 
         for (SceneObject s : container.getLeavesInRegion(c)) {
             // TODO: Handle non-strokes
-            if (s instanceof Stroke) {
-                Stroke stroke = (Stroke) s;
+            if (s instanceof Stroke stroke) {
                 result.append(stroke.serialize()).append(";;");
             }
         }

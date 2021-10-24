@@ -26,6 +26,13 @@ class Stroke {
     serialize() {
         let result = [];
 
+
+        // TODO: Remove. This works around a bug where the first points in
+        // uploaded strokes disappear.
+        if (this.points.length > 0) {
+            result.push(this.points[0].serialize());
+        }
+
         for (const point of this.points) {
             result.push(point.serialize());
         }

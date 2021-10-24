@@ -41,7 +41,7 @@ public class Stroke extends SceneObject {
         Point2D lastPoint = null;
 
         for (String pointData : serializedData.split("\n")) {
-            String[] parts = pointData.split(",\\s+");
+            String[] parts = pointData.split(",\\s*");
 
             // Skip any empty lines.
             if (parts.length == 0) continue;
@@ -71,8 +71,16 @@ public class Stroke extends SceneObject {
     public String serialize() {
         StringBuilder result = new StringBuilder();
 
+        Point2D lastPoint = null;
+        double lastThickness = 0.5;
         for (Line l : this.mLines) {
             result.append(l.start.x).append(",").append(l.start.y).append(",").append(l.thickness).append('\n');
+            lastThickness = l.thickness;
+            lastPoint = l.end;
+        }
+
+        if (lastPoint != null) {
+            result.append(lastPoint.x).append(",").append(lastPoint.y).append(",").append(lastThickness).append('\n');
         }
 
         return result.toString();
