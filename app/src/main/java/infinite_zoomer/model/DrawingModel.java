@@ -28,7 +28,7 @@ public class DrawingModel {
      * @return ContainerNode that encompasses the area.
      */
     public ContainerNode getContainerForRegion(Circle region) {
-        ContainerNode current = mRoot;
+        /*ContainerNode current = mRoot;
 
         while (region.extendsOutside(current.getBoundingCircle()) && current.getParent() != null) {
             // The current circle has no children; it's the prefect candidate.
@@ -44,10 +44,16 @@ public class DrawingModel {
         parent.addChild(current);
         current = parent;
 
-        return current;
+        return current;*/
+        return mRoot;
     }
 
     public ContainerNode getContainerForRegion(Rectangle region) {
         return getContainerForRegion(region.getBoundingCircle());
+    }
+
+    public void addObject(SceneObject object) {
+        ContainerNode container = getContainerForRegion(object.getBoundingCircle());
+        container.addChild(object);
     }
 }

@@ -1,6 +1,7 @@
 
 import { awaitTimeout } from "./asyncUtils.js";
 import { Point } from "./Point.js";
+import { Stroke } from "./Stroke.js";
 
 /**
  * Handles storage/syncing of lines & other scene objects.
@@ -83,10 +84,10 @@ class Scene {
         const viewportPosition = this.viewportPosition;
 
         let centerPosition = new Point(
-            viewportPosition.x + this.viewportWidth / 2,
-            viewportPosition.y + this.viewportHeight / 2
+            viewportPosition.x + this.viewportWidth / 2 * this.zoom,
+            viewportPosition.y + this.viewportHeight / 2 * this.zoom
         );
-        let radius = Math.max(this.viewportWidth / 2, this.viewportHeight / 2);
+        let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom);
 
         return new Promise(function(resolve, reject){
             let http = new XMLHttpRequest();
@@ -99,6 +100,7 @@ class Scene {
                 }
                 else if (http.readyState == 4 && http.status != 200) {
                     // reject is like resolve, but for failure (throws an error)
+                    console.error("Error: ", http.responseText);
                     reject(http.responseText);
                 }
             }
@@ -108,12 +110,15 @@ class Scene {
 
     async refreshScene() {
         let serverTxt = await this.getServerData();
-        let strokes = serverTxt.split("S\n");
+        let strokes = serverTxt.split(";;");
+        console.log(strokes.length);
         this.entities = [];
 
         for (let strokeData of strokes) {
             this.entities.push(new Stroke(strokeData));
         }
+
+        console.log("Refreshed!");
     }
 
     async updateLoop() {

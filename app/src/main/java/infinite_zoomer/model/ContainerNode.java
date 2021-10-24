@@ -26,7 +26,7 @@ public class ContainerNode extends SceneObject {
         updateBoundingCircle();
 
         // TODO: Re-balance if necessary (e.g. group children into sub-containers).
-        if (mRegion != null && mRegion.extendsOutside(mParent.getBoundingCircle())) {
+        if (mRegion != null && mParent != null && mRegion.extendsOutside(mParent.getBoundingCircle())) {
             mParent.updateBoundingCircle();
         }
     }
@@ -80,7 +80,7 @@ public class ContainerNode extends SceneObject {
     @Override
     public boolean isWithin(Circle c) {
         if (mRegion == null) {
-            return false;
+            return true;
         }
 
         return c.intersects(mRegion);

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 
 public class HTMLGUI implements AbstractGUI {
-    private static final Pattern MODEL_REQUEST_PATTERN = Pattern.compile("refresh:(%d+\\.%d+|%d+),(%d+\\.%d+|%d+),(%d+\\.%d+|%d+)");
+    private static final Pattern MODEL_REQUEST_PATTERN = Pattern.compile("^refresh:(\\d+\\.?\\d*),(\\d+\\.?\\d*),(\\d+\\.?\\d*)");
 
     private final DrawingModel mModel;
 
@@ -72,7 +72,9 @@ public class HTMLGUI implements AbstractGUI {
             return serializeModel(request);
         }
         else if (request.startsWith("addstroke")) {
-            return "TODO";
+            Stroke stroke = new Stroke(data);
+            mModel.addObject(stroke);
+            return "OKAY!";
         }
 
         System.err.printf("Warning: Received unknown API request: %s with data %s%n", request, data);

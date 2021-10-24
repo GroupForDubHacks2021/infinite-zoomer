@@ -24,8 +24,9 @@ class Point {
 /// Point.fromSerialized("1, 2, 3") creates a point
 /// at (1, 2), with size 3.
 Point.fromSerialized = (data) => {
-    let parts = data.split(", ");
+    let parts = data.split(",");
     if (parts.length !== 3) {
+        console.log(data);
         throw new Error(`parts ({parts}) is not of length 3!!!`);
     }
 

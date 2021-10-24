@@ -193,10 +193,12 @@ public class ClientHandler extends Thread {
             String response = mGui.apiRequest(request, data.toString());
             mOutput.println("HTTP/1.1 200 OK");
             mOutput.println("Content-type: text/plain");
-            mOutput.printf("Content-length: %d%n", response.length());
+            mOutput.printf("Content-length: %d%n", response.length() + 1);
             mOutput.println();
             mOutput.println();
             mOutput.println(response);
+            mOutput.println();
+            mOutput.println();
         }
 
         // Finish sending content.

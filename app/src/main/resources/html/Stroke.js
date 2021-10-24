@@ -37,7 +37,9 @@ class Stroke {
     deserialize(data) {
         const lines = data.split("\n");
         for (const line of lines) {
-            this.points.push(Point.fromSerialized(line));
+            if (line != "") {
+                this.points.push(Point.fromSerialized(line));
+            }
         }
     }
 
