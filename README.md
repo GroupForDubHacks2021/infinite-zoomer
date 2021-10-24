@@ -5,4 +5,22 @@ A DubHacks 2021 submission. See [its DevPost](https://devpost.com/software/infin
 
 ## Building & Running
 
-This project is built in JavaScript and Java. IT uses gradle and the main folder is an IntelliJ IDEA project.
+This project is built in JavaScript and Java. It uses gradle and the main folder is an IntelliJ IDEA project.
+
+To download and run, first make sure you have [Gradle](https://gradle.org/) and JDK 16!
+
+From a terminal:
+```
+$ git clone git@github.com:GroupForDubHacks2021/infinite-zoomer.git
+$ cd infinite-zoomer
+$ gradle build
+$ gradle run
+```
+
+This will start a server on port `8000` of your computer. You can view it on that computer's browser by navigating to `http://localhost:8000/`.
+
+If connecting from a remote machine,
+ * make sure you're on the same WIFI network as the host machine
+ * In a web-browser, visit `http://host-machine-ip-address-here:8000` replacing `host-machine-ip-address-here` with the IP address of the computer with the server.
+   * On Linux, you can get this address by running `hostname -I`. It should look something like `192.168.1.16`.
+   * Some devices might have firewalls that block the server! Make sure your firewall is configured to allow remote communication over port `8000`!
