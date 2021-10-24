@@ -4,13 +4,27 @@
     box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.4);
     height: auto;
     width: auto;
+
+    /* Grow to fill available space */
     flex-grow: 1;
+
+    background-color: white;
 }
 
 body {
+    /*
+     Flexbox display: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox
+     Makes everything in body grow/shrink with body.
+    */
     display: flex;
+
+    /* Arrange things in the body in a column */
     flex-direction: column;
-    flex-grow: 1;
+
+    /*
+     Touchscreen devices: Tap and drag should trigger
+     our touch actions, not the browser's.
+     */
     touch-action: none;
 
     width: 100vw;

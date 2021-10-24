@@ -5,7 +5,7 @@
 
 function assert_eq(a, b, message) {
     if (a !== b) {
-        throw `ASSERTION ERROR: {a} !== {b}. Message: {message}`;
+        throw `ASSERTION ERROR: ${a} !== ${b}. Message: ${message}`;
     }
 }
 
