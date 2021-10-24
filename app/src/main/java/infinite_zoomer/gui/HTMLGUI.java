@@ -9,6 +9,12 @@ import java.util.function.Consumer;
  */
 
 public class HTMLGUI implements AbstractGUI {
+    private DrawingModel mModel;
+
+    public HTMLGUI(DrawingModel model) {
+        mModel = model;
+    }
+
     @Override
     public void render() {
 

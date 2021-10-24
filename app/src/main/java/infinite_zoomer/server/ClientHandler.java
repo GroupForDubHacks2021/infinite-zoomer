@@ -1,7 +1,11 @@
 package infinite_zoomer.server;
 
+import infinite_zoomer.gui.HTMLGUI;
+
 import java.io.*;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handles an HTTP request from a client
@@ -19,12 +23,15 @@ public class ClientHandler extends Thread {
             "</body>" +
             "</html>";
 
+    private static final Pattern GET_REQUEST_PATTERN = Pattern.compile("^GET (.*) HTTP/1.1");
     private final Scanner mInput;
     private final PrintWriter mOutput;
+    private final HTMLGUI mGui;
 
-    public ClientHandler(InputStream in, OutputStream out) {
+    public ClientHandler(HTMLGUI gui, InputStream in, OutputStream out) {
         mInput = new Scanner(in);
         mOutput = new PrintWriter(out);
+        mGui = gui;
     }
 
     /**
@@ -83,9 +90,19 @@ public class ClientHandler extends Thread {
         File htmlDir = new File(PATH_TO_HTML);
         assert(htmlDir.isDirectory());
 
+        Matcher matcher = GET_REQUEST_PATTERN.matcher(requestName);
+        if (matcher.find()) {
+            requestName = matcher.group(1);
+            System.out.println(requestName);
+        }
+
         requestName = requestName.trim();
         if (requestName.startsWith("/") || requestName.startsWith("\\")) {
             requestName = requestName.substring(1);
+        }
+
+        if (requestName.equals("")) {
+            requestName = "index.html";
         }
 
         for (File f : htmlDir.listFiles()) {
@@ -112,6 +129,13 @@ public class ClientHandler extends Thread {
             // TODO: Remove this, it's for debugging
             System.out.println("Got an API request!");
             System.out.println(request);
+
+            // TODO: Forward the request to mGui, which can then respond.
+            String response = "TODO: Implement";
+            mOutput.println("HTTP/1.1 200 OK");
+            mOutput.println();
+            mOutput.println();
+            mOutput.println(response);
         }
 
         // Finish sending content.

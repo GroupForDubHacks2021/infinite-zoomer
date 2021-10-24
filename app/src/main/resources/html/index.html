@@ -10,7 +10,7 @@
     <body>
     To-do!!!
     <canvas id = "main"></canvas>
-    <script>
+    <script>'use strict';
         function nextAnimationFrame()
         {
             return new Promise((resolve, reject) =>
@@ -26,8 +26,14 @@
             const ctx = canvas.getContext("2d");
 
             // TODO: Setup onpointermove, onpointerdown, onpointerup events.
-            const event = new Event('on_pointer_move');
-            elem.addEventListener('on_pointer_move', function(e){ /* ... */ }, false);
+            // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onpointerdown
+            function moveHandler(ev) {
+
+            }
+            function init() {
+              let el=document.getElementById('target1');
+              el.onpointermove = moveHandler;
+            }
 
             while (true)
             {

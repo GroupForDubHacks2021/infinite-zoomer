@@ -1,5 +1,6 @@
 package infinite_zoomer.server;
 
+import infinite_zoomer.gui.HTMLGUI;
 import infinite_zoomer.model.DrawingModel;
 
 import java.io.IOException;
@@ -15,8 +16,11 @@ import java.util.Scanner;
 public class HTMLServer extends Thread {
     private static final int SERVER_PORT = 8000;
     private final ServerSocket mSocket;
+    private final HTMLGUI mGui;
 
-    public HTMLServer(DrawingModel model) {
+    public HTMLServer(HTMLGUI gui) {
+        mGui = gui;
+
         // References:
         //  * https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
         //  * https://ssaurel.medium.com/create-a-simple-http-web-server-in-java-3fc12b29d5fd
@@ -63,7 +67,7 @@ public class HTMLServer extends Thread {
     private void acceptConnection() {
         try {
             final Socket client = mSocket.accept();
-            final ClientHandler handler = new ClientHandler(client.getInputStream(), client.getOutputStream());
+            final ClientHandler handler = new ClientHandler(mGui, client.getInputStream(), client.getOutputStream());
 
             // TODO: We're starting a new thread here for every incoming client.
             //       Do we want to do this?
