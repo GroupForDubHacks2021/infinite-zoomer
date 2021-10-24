@@ -3,6 +3,7 @@ import { Point } from "./Point.js";
 
 class Stroke {
     constructor(data) {
+        this.points = [];
         if (typeof data == "string") {
             // If constructed with just a string, we're
             // deserializing the stroke.
@@ -37,6 +38,27 @@ class Stroke {
         const lines = data.split("\n");
         for (const line of lines) {
             this.points.push(Point.fromSerialized(line));
+        }
+    }
+
+    /// Render this stroke to the given drawing context.
+    /// Applies [transform] to each point before rendering.
+    /// [transform: function(Point) -> void]
+    render(ctx, transform) {
+        let lastPoint = null;
+        for (let point of this.points) {
+            point = point.clone();
+            transform(point);
+
+            if (lastPoint) {
+                ctx.beginPath();
+                ctx.lineWidth = point.size;
+                ctx.moveTo(lastPoint.x, lastPoint.y);
+                ctx.lineTo(point.x, point.y);
+                ctx.stroke();
+            }
+
+            lastPoint = point;
         }
     }
 }

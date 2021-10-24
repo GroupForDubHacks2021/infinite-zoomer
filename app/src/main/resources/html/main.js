@@ -1,6 +1,7 @@
 "use strict";
 
 import { Stroke } from "./Stroke.js";
+import { Point } from "./Point.js";
 
 /// An async function that resolves after a short amount of time.
 /// It uses requestAnimationFrame, so the browser can make this take
@@ -31,9 +32,18 @@ async function main()
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        let transform = (point) => {
+            // TODO: Transform point based on current zoom, position, etc.
+            // E.g.
+            // point.x *= 2;
+            // point.x -= 500;
+            // While we could use ctx.scale or ctx.transform, that won't work
+            // if we want to be able to zoom in as far as we want.
+        };
+
         // Render all elements!
         for (const elem of sceneContent) {
-            elem.render(ctx);
+            elem.render(ctx, transform);
         }
     };
 
@@ -46,18 +56,23 @@ async function main()
         //
         // If it's a secondary pointer, we probably want to switch from drawing to
         // zooming.
+        ev.preventDefault();
 
-        if (ev.primary) {
+        if (ev.isPrimary) {
             stroke = new Stroke();
             stroke.addPoint(new Point(ev.clientX, ev.clientY));
+        } else {
+            // Initialize some zoom object?
         }
 
         render();
     });
 
     canvas.addEventListener("pointermove", (ev) => {
+        ev.preventDefault();
+
         if (stroke != null) {
-            ;;
+            stroke.addPoint(new Point(ev.clientX, ev.clientY));
         } else {
             // Zoom???
         }
@@ -66,9 +81,12 @@ async function main()
     });
 
     canvas.addEventListener("pointerup", (ev) => {
+        ev.preventDefault();
+
         // TODO: Send stroke to the server.
         if (stroke != null) {
-            ;;
+            sceneContent.push(stroke);
+            console.log("DONE");
         }
 
         stroke = null;
