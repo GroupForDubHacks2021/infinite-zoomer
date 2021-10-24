@@ -12,9 +12,11 @@ import java.util.regex.Pattern;
  */
 
 public class ClientHandler extends Thread {
-    // TODO: Find the HTML directory???
+    // If we're running the app from the commandline, (via Gradle), the initial
+    // working directory is different from if we're running it from IntelliJ.
     private static final String PATH_TO_HTML = "./app/src/main/resources/html";
     private static final String ALTERNATE_PATH_TO_HTML = "./src/main/resources/html";
+
     private static final String ERROR_404_MESSAGE = "<!DOCTYPE html>" +
             "<html>" +
             "<head><title>404 Error</title></head>" +
@@ -25,6 +27,7 @@ public class ClientHandler extends Thread {
             "</html>";
 
     private static final Pattern GET_REQUEST_PATTERN = Pattern.compile("^GET (.*) HTTP/1.1");
+    private static final Pattern API_REQUEST_PATTERN = Pattern.compile("^GET /api\\?(.*) HTTP/1.1");
     private final Scanner mInput;
     private final PrintWriter mOutput;
     private final HTMLGUI mGui;
@@ -149,16 +152,32 @@ public class ClientHandler extends Thread {
         String request = mInput.nextLine().trim();
         System.out.printf("Got a request: %s%n", request);
 
-        if (request.startsWith("GET /")) {
+        if (request.startsWith("GET /") && !request.startsWith("GET /api?")) {
             sendFile(getFile(request));
         } else {
-            // TODO: Remove this, it's for debugging
-            System.out.println("Got an API request!");
-            System.out.println(request);
+            // API Queries
 
-            // TODO: Forward the request to mGui, which can then respond.
-            String response = "TODO: Implement";
+            StringBuilder data = new StringBuilder();
+
+            while (mInput.hasNextLine()) {
+                String line = mInput.nextLine();
+                data.append(line).append('\n');
+
+                // Headers/post content normally ends with a blank line.
+                if (line.trim().equals("")) {
+                    break;
+                }
+            }
+
+            Matcher matcher = API_REQUEST_PATTERN.matcher(request);
+            if (matcher.find()) {
+                request = matcher.group(1);
+            }
+
+            String response = mGui.apiRequest(request, data.toString());
             mOutput.println("HTTP/1.1 200 OK");
+            mOutput.println("Content-type: text/plain");
+            mOutput.printf("Content-length: %d%n", response.length());
             mOutput.println();
             mOutput.println();
             mOutput.println(response);

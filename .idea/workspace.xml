@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/ModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/ModelTest.java" afterDir="false" />
     </list>
-    <list id="53daa692-38e9-43cb-88d6-d339aa050935" name="Changes by aditijain" comment="">
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-    </list>
+    <list id="828a01f6-a27f-4397-af8d-209e73129aa2" name="Changes by jason" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,13 +71,13 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Gradle.ModelTest.testDrawingModel">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="infinite_zoomer.App" />
       <module name="infinite-zoomer.app.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="infinite_zoomer.model.*" />
+          <option name="PATTERN" value="infinite_zoomer.model.geometry.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -95,12 +94,58 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ModelTest.testCircleMath" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;infinite.zoomer.ModelTest.testCircleMath&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ModelTest.testDrawingModel" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;infinite.zoomer.ModelTest.testDrawingModel&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.Run" />
       <item itemvalue="Application.App" />
+      <item itemvalue="Gradle.ModelTest.testCircleMath" />
+      <item itemvalue="Gradle.ModelTest.testDrawingModel" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ModelTest.testDrawingModel" />
+        <item itemvalue="Gradle.ModelTest.testCircleMath" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
