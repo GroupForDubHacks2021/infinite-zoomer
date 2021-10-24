@@ -130,6 +130,8 @@ async function main()
             stroke = new Stroke();
             stroke.addPoint(eventToPoint(ev));
             pointerDownCount = 0;
+
+            canvas.setPointerCapture(ev.pointerId);
         } else {
             stroke = null;
             zoomGesture = new ZoomController(zoom);
@@ -139,7 +141,7 @@ async function main()
         pointerDownCount ++;
         console.log(pointerDownCount);
         render();
-    });
+    }, true);
 
     canvas.addEventListener("pointermove", (ev) => {
         if (pointerDownCount == 0) {
@@ -169,7 +171,7 @@ async function main()
         }
 
         render();
-    });
+    }, true);
 
     canvas.addEventListener("pointerup", (ev) => {
         ev.preventDefault();
@@ -199,6 +201,11 @@ async function main()
         pointerDownCount --;
 
         render();
+    }, true);
+
+    canvas.addEventListener("pointercancel", (ev) => {
+        ev.preventDefault();
+        canvas.releasePointerCapture(ev.pointerId);
     });
 
     while (true)

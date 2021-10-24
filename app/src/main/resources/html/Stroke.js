@@ -45,6 +45,7 @@ class Stroke {
     /// Applies [transform] to each point before rendering.
     /// [transform: function(Point) -> void]
     render(ctx, transform) {
+        let buffer = [];
         let lastPoint = null;
         for (let point of this.points) {
             point = point.clone();

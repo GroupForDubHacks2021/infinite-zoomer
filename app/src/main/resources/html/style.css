@@ -9,6 +9,9 @@
     flex-grow: 1;
 
     background-color: white;
+
+    /* iOS can try to select the Canvas. We don't want that. */
+    user-select: none;
 }
 
 body {
