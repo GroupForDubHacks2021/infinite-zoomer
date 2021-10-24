@@ -1,6 +1,0 @@
-
-class Stroke {
-
-}
-
-export { Stroke };

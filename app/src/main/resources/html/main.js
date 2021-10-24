@@ -1,6 +1,6 @@
 "use strict";
 
-import { Stroke } from "./stroke.js";
+import { Stroke } from "./Stroke.js";
 
 /// An async function that resolves after a short amount of time.
 /// It uses requestAnimationFrame, so the browser can make this take
@@ -16,15 +16,11 @@ function nextAnimationFrame()
 
 async function main()
 {
-    const canvas = document.querySelector("#main");
+    const canvas = document.querySelector("#mainCanvas");
     const ctx = canvas.getContext("2d");
+    let stroke = null;
 
-    // TODO: Setup onpointermove, onpointerdown, onpointerup events.
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onpointerdown
-    function moveHandler(ev) {
-
-    }
-
     canvas.addEventListener("pointerdown", (ev) => {
         // Do stuff with [ev] here.
         // I think ev has a property called something like "primary".
@@ -33,14 +29,28 @@ async function main()
         //
         // If it's a secondary pointer, we probably want to switch from drawing to
         // zooming.
+
+        if (ev.primary) {
+            stroke = new Stroke();
+            storke.addPoint(new Point(ev.clientX, ev.clientY));
+        }
     });
 
     canvas.addEventListener("pointermove", (ev) => {
-
+        if (stroke != null) {
+            ;;
+        } else {
+            // Zoom???
+        }
     });
 
     canvas.addEventListener("pointerup", (ev) => {
+        // TODO: Send stroke to the server.
+        if (stroke != null) {
+            ;;
+        }
 
+        stroke = null;
     });
 
     while (true)

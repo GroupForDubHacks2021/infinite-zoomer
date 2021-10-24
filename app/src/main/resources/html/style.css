@@ -1,0 +1,12 @@
+
+#mainCanvas {
+    border: 1px solid black;
+    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.4);
+    flex-grow: 1;
+}
+
+:root, body {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
