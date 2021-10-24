@@ -5,10 +5,10 @@ import { assert_eq } from "./testUtils.js";
  * Represents a point with pressure (and perhaps color!)
  */
 class Point {
-    constructor(x, y) {
+    constructor(x, y, size) {
         this.x = x;
         this.y = y;
-        this.size = 0.5;
+        this.size = size || 0.5;
     }
 
     serialize() {

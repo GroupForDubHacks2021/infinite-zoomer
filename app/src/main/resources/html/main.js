@@ -2,6 +2,7 @@
 
 import { Stroke } from "./Stroke.js";
 import { Point } from "./Point.js";
+import { ZoomController } from "./ZoomController.js";
 
 /// An async function that resolves after a short amount of time.
 /// It uses requestAnimationFrame, so the browser can make this take
@@ -35,7 +36,10 @@ async function main()
     const canvas = document.querySelector("#mainCanvas");
     const ctx = canvas.getContext("2d");
     let stroke = null;
+
     let zoom = 1;
+    let viewportPosition = new Point(0, 0);
+
     let sceneContent = [];
 
     // Render everything!
@@ -50,8 +54,12 @@ async function main()
 
         let transform = (point) => {
             // TODO: Transform point based on current zoom, position, etc.
+
+            point.x += viewportPosition.x;
+            point.y += viewportPosition.y;
             point.x *= zoom;
             point.y *= zoom;
+
             // E.g.
             // point.x *= 2;
             // point.x -= 500;
@@ -70,12 +78,6 @@ async function main()
         }
     };
 
-    zoom_slider.oninput = function(){
-        zoom = zoom_slider.value/zoom_slider.max;
-        console.log(zoom);
-        render();
-    }
-
     /// Given a PointerEvent, convert it to a point.
     const eventToPoint = (ev) => {
         // Get location of the target element (our canvas)
@@ -83,11 +85,34 @@ async function main()
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        const x = (event.clientX - bbox.left)/zoom;
-        const y = (event.clientY - bbox.top)/zoom;
+        const x = (event.clientX - bbox.left)/zoom - viewportPosition.x;
+        const y = (event.clientY - bbox.top)/zoom - viewportPosition.y;
 
         return new Point(x, y);
     };
+
+    const zoomTo = (newZoom, center) => {
+        viewportPosition.x -= center.x / zoom;
+        viewportPosition.y -= center.y / zoom;
+
+        zoom = newZoom;
+
+        viewportPosition.x += center.x / zoom;
+        viewportPosition.y += center.y / zoom;
+    };
+
+    zoom_slider.oninput = function() {
+        // Keep the view centered.
+
+        zoomTo(zoom_slider.value / zoom_slider.max, new Point(canvas.width / 2, canvas.height / 2));
+
+        render();
+    };
+
+    // For multi-touch
+    let zoomGesture = new ZoomController();
+
+    let pointerDownCount = 0;
 
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onpointerdown
     canvas.addEventListener("pointerdown", (ev) => {
@@ -100,23 +125,45 @@ async function main()
         // zooming.
         ev.preventDefault();
 
-        if (ev.isPrimary) {
+        if (pointerDownCount == 0) {
             stroke = new Stroke();
             stroke.addPoint(eventToPoint(ev));
         } else {
-            // Initialize some zoom object?
+            stroke = null;
+            zoomGesture = new ZoomController(zoom);
+            zoomGesture.onPointerMove(ev.pointerId, new Point(ev.clientX, ev.clientY));
         }
 
+        pointerDownCount ++;
+        console.log(pointerDownCount);
         render();
     });
 
     canvas.addEventListener("pointermove", (ev) => {
+        if (pointerDownCount == 0) {
+            return;
+        }
+
         ev.preventDefault();
+        let pointerLocation = eventToPoint(ev);
 
         if (stroke != null) {
-            stroke.addPoint(eventToPoint(ev));
+            // We're drawing a stroke!
+
+            stroke.addPoint(pointerLocation);
         } else {
-            // Zoom???
+            // We're zooming!
+            let oldZoomCenter = zoomGesture.getCenter();
+            let pointerCount = zoomGesture.getPointerCount();
+            zoomGesture.onPointerMove(ev.pointerId, new Point(ev.clientX, ev.clientY));
+
+            if (pointerCount >= 2) {
+                let zoomCenter = zoomGesture.getCenter();
+
+                viewportPosition.x += (zoomCenter.x - oldZoomCenter.x) / zoom;
+                viewportPosition.y += (zoomCenter.y - oldZoomCenter.y) / zoom;
+                zoomTo(zoomGesture.update(), zoomCenter);
+            }
         }
 
         render();
@@ -142,9 +189,12 @@ async function main()
                 }
             }
             http.send(params);
+        } else {
+            zoomGesture = null;
         }
 
         stroke = null;
+        pointerDownCount --;
 
         render();
     });
