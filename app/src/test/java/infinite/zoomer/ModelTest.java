@@ -3,6 +3,7 @@ package infinite.zoomer;
 import infinite_zoomer.App;
 import infinite_zoomer.model.ContainerNode;
 import infinite_zoomer.model.DrawingModel;
+import infinite_zoomer.model.Stroke;
 import infinite_zoomer.model.geometry.Circle;
 import infinite_zoomer.model.geometry.Point2D;
 import infinite_zoomer.model.geometry.Rectangle;
@@ -14,6 +15,11 @@ public class ModelTest {
         DrawingModel model = new DrawingModel();
         ContainerNode node = model.getContainerForRegion(new Rectangle(0.0, 0.0, 5.0, 5.0));
         assertNotNull(node);
+
+        Stroke stroke = new Stroke("0, 0, 1\n" +
+                "2, 3, 4\n" +
+                "4, 5, 6\n");
+        assertTrue((new Circle(new Point2D(0, 0), 20.0)).intersects(stroke.getBoundingCircle()));
     }
 
     @Test public void testCircleMath() {

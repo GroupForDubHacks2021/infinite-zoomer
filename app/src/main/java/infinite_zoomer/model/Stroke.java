@@ -38,7 +38,10 @@ public class Stroke extends SceneObject {
         Point2D lastPoint = null;
 
         for (String pointData : serializedData.split("\n")) {
-            String[] parts = pointData.split(",\\S+");
+            String[] parts = pointData.split(",\\s+");
+
+            // Skip any empty lines.
+            if (parts.length == 0) continue;
 
             // Should have x, y, pressure
             assert(parts.length == 3);

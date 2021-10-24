@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/ModelTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/DrawingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/DrawingModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/ModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/infinite/zoomer/ModelTest.java" afterDir="false" />
     </list>
     <list id="828a01f6-a27f-4397-af8d-209e73129aa2" name="Changes by jason" comment="" />
     <option name="SHOW_DIALOG" value="false" />
