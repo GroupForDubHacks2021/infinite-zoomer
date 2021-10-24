@@ -1,13 +1,32 @@
-/**
- * File for rendering a line.
- */
 
 package infinite_zoomer.model;
-import java.awt.Color;
+import infinite_zoomer.model.geometry.Circle;
+import infinite_zoomer.model.geometry.Point2D;
 
-public class Line {
-    // TODO: Line data
-    double x1, y1, x2, y2;
-    Color color;
-    double thickness;
+/**
+ * File for representing a line.
+ */
+
+public class  Line extends SceneObject {
+    public final Point2D start, end;
+    public final Color color;
+    public final double thickness;
+
+    public Line(Point2D start, Point2D end, Color color, double thickness) {
+        this.start = start;
+        this.end = end;
+        this.color = color;
+        this.thickness = thickness;
+    }
+
+    @Override
+    boolean isWithin(Circle r) {
+        if (r.contains(start) || r.contains(end)) {
+            return true;
+        }
+
+        // TODO Check interior points of line.
+
+        return false;
+    }
 }
