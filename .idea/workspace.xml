@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/Point.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/Stroke.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/testUtils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/Point.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/Point.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/Stroke.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/Stroke.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/stroke.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

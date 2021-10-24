@@ -13,12 +13,29 @@ function nextAnimationFrame()
     });
 }
 
-
 async function main()
 {
     const canvas = document.querySelector("#mainCanvas");
     const ctx = canvas.getContext("2d");
     let stroke = null;
+
+    let sceneContent = [];
+
+    // Render everything!
+    const render = () => {
+        // Re-size the drawing context (if the canvas size changed)
+        // If we don't do this, everything will look stretched!
+        if (canvas.clientWidth !== canvas.width || canvas.clientHeight !== canvas.height) {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Render all elements!
+        for (const elem of sceneContent) {
+            elem.render(ctx);
+        }
+    };
 
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onpointerdown
     canvas.addEventListener("pointerdown", (ev) => {
@@ -32,8 +49,10 @@ async function main()
 
         if (ev.primary) {
             stroke = new Stroke();
-            storke.addPoint(new Point(ev.clientX, ev.clientY));
+            stroke.addPoint(new Point(ev.clientX, ev.clientY));
         }
+
+        render();
     });
 
     canvas.addEventListener("pointermove", (ev) => {
@@ -42,6 +61,8 @@ async function main()
         } else {
             // Zoom???
         }
+
+        render();
     });
 
     canvas.addEventListener("pointerup", (ev) => {
@@ -51,6 +72,8 @@ async function main()
         }
 
         stroke = null;
+
+        render();
     });
 
     while (true)
