@@ -24,3 +24,7 @@ If connecting from a remote machine,
  * In a web-browser, visit `http://host-machine-ip-address-here:8000` replacing `host-machine-ip-address-here` with the IP address of the computer with the server.
    * On Linux, you can get this address by running `hostname -I`. It should look something like `192.168.1.16`.
    * Some devices might have firewalls that block the server! Make sure your firewall is configured to allow remote communication over port `8000`!
+
+## Demo a serverless version
+
+Although Infinite Zoomer works best if connected to a server (better performance), you can demo it (serverless!) here: https://groupfordubhacks2021.github.io/infinite-zoomer/app/src/main/resources/html/index.html
