@@ -158,13 +158,21 @@ public class ClientHandler extends Thread {
             // API Queries
 
             StringBuilder data = new StringBuilder();
-
+            int contentLength = -1;
             while (mInput.hasNextLine()) {
                 String line = mInput.nextLine();
-                data.append(line).append('\n');
+                if (line.startsWith("Content-Length: ")){
+                    contentLength = Integer.parseInt(line.substring(line.indexOf(":") + 1).trim());
+                    System.out.println(contentLength);
+                }
 
                 // Headers/post content normally ends with a blank line.
                 if (line.trim().equals("")) {
+                    for(int i = 0; i < contentLength; i++) {
+                        String line_content = mInput.nextLine();
+                        data.append(line_content + '\n');
+                        i = i + line_content.length();
+                    }
                     break;
                 }
             }

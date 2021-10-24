@@ -14,12 +14,28 @@ function nextAnimationFrame()
     });
 }
 
+function getStrokes(){
+
+    return new Promise(function(resolve, reject){
+        var http = new XMLHttpRequest();
+        var url = '/api?getstroke';
+        http.open('GET', url, true);
+
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState == 4 && http.status == 200) {
+                resolve(http.responseText);
+            }
+        }
+        http.send();
+    })
+}
+
 async function main()
 {
     const canvas = document.querySelector("#mainCanvas");
     const ctx = canvas.getContext("2d");
     let stroke = null;
-
+    let zoom = 1;
     let sceneContent = [];
 
     // Render everything!
@@ -34,6 +50,8 @@ async function main()
 
         let transform = (point) => {
             // TODO: Transform point based on current zoom, position, etc.
+            point.x *= zoom;
+            point.y *= zoom;
             // E.g.
             // point.x *= 2;
             // point.x -= 500;
@@ -52,6 +70,12 @@ async function main()
         }
     };
 
+    zoom_slider.oninput = function(){
+        zoom = zoom_slider.value/zoom_slider.max;
+        console.log(zoom);
+        render();
+    }
+
     /// Given a PointerEvent, convert it to a point.
     const eventToPoint = (ev) => {
         // Get location of the target element (our canvas)
@@ -59,8 +83,8 @@ async function main()
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        const x = event.clientX - bbox.left;
-        const y = event.clientY - bbox.top;
+        const x = (event.clientX - bbox.left)/zoom;
+        const y = (event.clientY - bbox.top)/zoom;
 
         return new Point(x, y);
     };
@@ -104,16 +128,17 @@ async function main()
         // TODO: Send stroke to the server.
         if (stroke != null) {
             sceneContent.push(stroke);
-            console.log(stroke.serialize())
-
             var http = new XMLHttpRequest();
             var url = '/api?addstroke';
-            var params = 'orem=ipsum&name=binny';
+            var params = stroke.serialize()+ '\n';
             http.open('POST', url, true);
+
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'text/plain');
 
             http.onreadystatechange = function() {//Call a function when the state changes.
                 if(http.readyState == 4 && http.status == 200) {
-                    alert(http.responseText);
+                    console.log(http.responseText);
                 }
             }
             http.send(params);
@@ -126,7 +151,9 @@ async function main()
 
     while (true)
     {
+
         // TODO: Ask server for new data
+        // console.log(await getStrokes());
         // TODO: Re-render if there's anything new.
 
         await nextAnimationFrame();

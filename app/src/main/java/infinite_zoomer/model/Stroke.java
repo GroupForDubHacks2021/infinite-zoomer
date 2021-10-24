@@ -5,6 +5,7 @@ import infinite_zoomer.model.geometry.Point2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;import java.util.*;
 
 /**
  * Represents a stroke with pressure.
@@ -16,6 +17,7 @@ public class Stroke extends SceneObject {
     private final List<Line> mLines;
     private Color mColor;
     private Circle mBoundingCircle;
+    private long mTimeStamp;
 
     /**
      * Create an empty stroke.
@@ -23,6 +25,7 @@ public class Stroke extends SceneObject {
     public Stroke() {
         mLines = new ArrayList<>();
         mColor = DEFAULT_COLOR;
+        mTimeStamp = new Date().getTime();
 
         updateBoundingCircle();
     }

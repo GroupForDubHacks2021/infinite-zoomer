@@ -32,6 +32,8 @@ public class HTMLGUI implements AbstractGUI {
         }
 
         System.out.println("API request!");
+        System.out.println(request);
+
         return "You sent for " + request + " with " + data;
     }
 }

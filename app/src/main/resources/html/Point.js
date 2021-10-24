@@ -12,7 +12,7 @@ class Point {
     }
 
     serialize() {
-        return `{this.x}, {this.y}, {this.size}`;
+        return `${this.x}, ${this.y}, ${this.size}`;
     }
 
     clone() {
