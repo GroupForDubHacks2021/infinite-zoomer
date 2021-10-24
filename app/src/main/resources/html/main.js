@@ -3,35 +3,15 @@
 import { Stroke } from "./Stroke.js";
 import { Point } from "./Point.js";
 import { ZoomController } from "./ZoomController.js";
+import { Scene } from "./Scene.js";
 
 const WHEEL_DELTA_MODE_LINE = 1;
 const WHEEL_DELTA_MODE_PAGE = 2;
 
-/// An async function that resolves after a short amount of time.
-/// It uses requestAnimationFrame, so the browser can make this take
-/// longer to complete if, say, the user isn't looking at the tab.
-function nextAnimationFrame()
-{
-    return new Promise((resolve, reject) =>
-    {
-        requestAnimationFrame(resolve);
-    });
-}
 
-function getStrokes(){
+/// Get the scene for the current zoom (if it's changed).
+function getStrokes(viewportPosition, zoom) {
 
-    return new Promise(function(resolve, reject){
-        var http = new XMLHttpRequest();
-        var url = '/api?getstroke';
-        http.open('GET', url, true);
-
-        http.onreadystatechange = function() {//Call a function when the state changes.
-            if(http.readyState == 4 && http.status == 200) {
-                resolve(http.responseText);
-            }
-        }
-        http.send();
-    })
 }
 
 async function main()
@@ -43,7 +23,7 @@ async function main()
     let zoom = 1;
     let viewportPosition = new Point(0, 0);
 
-    let sceneContent = [];
+    let sceneContent;
 
     // Render everything!
     const render = () => {
@@ -72,7 +52,7 @@ async function main()
         };
 
         // Render all elements!
-        for (const elem of sceneContent) {
+        for (const elem of sceneContent.getElems()) {
             elem.render(ctx, transform);
         }
 
@@ -119,6 +99,8 @@ async function main()
         viewportPosition.y += center.y / zoom;
     };
 
+    sceneContent = new Scene(render);
+
     zoom_slider.oninput = function() {
         // Keep the view centered.
 
@@ -147,7 +129,7 @@ async function main()
         console.log(delta);
 
         if (delta < 0) {
-            delta = 1/(1 + Math.abs(delta));
+            delta = Math.max(1/(1 + Math.abs(delta)), 0.01);
         } else if (delta < 1) {
             delta += 1;
         }
@@ -225,21 +207,7 @@ async function main()
 
         // TODO: Send stroke to the server.
         if (stroke != null) {
-            sceneContent.push(stroke);
-            var http = new XMLHttpRequest();
-            var url = '/api?addstroke';
-            var params = stroke.serialize()+ '\n';
-            http.open('POST', url, true);
-
-            //Send the proper header information along with the request
-            http.setRequestHeader('Content-type', 'text/plain');
-
-            http.onreadystatechange = function() {//Call a function when the state changes.
-                if(http.readyState == 4 && http.status == 200) {
-                    console.log(http.responseText);
-                }
-            }
-            http.send(params);
+            sceneContent.addStroke(stroke);
         } else {
             zoomGesture = null;
         }
@@ -259,15 +227,7 @@ async function main()
         ev.preventDefault();
     });
 
-    while (true)
-    {
-
-        // TODO: Ask server for new data
-        // console.log(await getStrokes());
-        // TODO: Re-render if there's anything new.
-
-        await nextAnimationFrame();
-    }
+    await sceneContent.updateLoop();
 }
 
 main();
