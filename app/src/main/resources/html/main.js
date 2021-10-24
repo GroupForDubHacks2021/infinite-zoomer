@@ -129,7 +129,7 @@ async function main()
         console.log(delta);
 
         if (delta < 0) {
-            delta = Math.max(1/(1 + Math.abs(delta)), 0.01);
+            delta = Math.max(1/(1 + Math.abs(delta)), 0.7);
         } else if (delta < 1) {
             delta += 1;
         }
