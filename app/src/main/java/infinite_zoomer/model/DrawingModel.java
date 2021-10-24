@@ -46,4 +46,8 @@ public class DrawingModel {
 
         return current;
     }
+
+    public ContainerNode getContainerForRegion(Rectangle region) {
+        return getContainerForRegion(region.getBoundingCircle());
+    }
 }
