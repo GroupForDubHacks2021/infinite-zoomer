@@ -59,6 +59,7 @@ async function main()
             point.y += viewportPosition.y;
             point.x *= zoom;
             point.y *= zoom;
+            point.size *= zoom;
 
             // E.g.
             // point.x *= 2;
@@ -88,7 +89,7 @@ async function main()
         const x = (event.clientX - bbox.left)/zoom - viewportPosition.x;
         const y = (event.clientY - bbox.top)/zoom - viewportPosition.y;
 
-        return new Point(x, y);
+        return new Point(x, y, (ev.pressure || 0.5) / zoom);
     };
 
     const zoomTo = (newZoom, center) => {
