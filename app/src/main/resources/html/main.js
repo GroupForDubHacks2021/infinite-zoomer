@@ -20,9 +20,6 @@ async function main()
     const ctx = canvas.getContext("2d");
     let stroke = null;
 
-    let zoom = 1;
-    let viewportPosition = new Point(0, 0);
-
     let sceneContent;
 
     // Render everything!
@@ -32,8 +29,12 @@ async function main()
         if (canvas.clientWidth !== canvas.width || canvas.clientHeight !== canvas.height) {
             canvas.width = canvas.clientWidth;
             canvas.height = canvas.clientHeight;
+
+            sceneContent.updateViewportSize(canvas.width, canvas.height);
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const zoom = sceneContent.getZoom();
+        const viewportPosition = sceneContent.viewportPosition;
 
         let transform = (point) => {
             // TODO: Transform point based on current zoom, position, etc.
@@ -71,7 +72,7 @@ async function main()
         const x = event.clientX - bbox.left;
         const y = event.clientY - bbox.top;
 
-        return new Point(x, y, (ev.pressure || 0.5) / zoom);
+        return new Point(x, y, (ev.pressure || 0.5));
     };
 
     /// Given a PointerEvent, convert it to a point in the zoomed canvas
@@ -79,24 +80,16 @@ async function main()
         let result = eventToUnzoomedPoint(ev);
         // Get location of the target element (our canvas)
         const bbox = canvas.getBoundingClientRect();
+        const zoom = sceneContent.getZoom();
+        const viewportPosition = sceneContent.viewportPosition;
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
         result.x = result.x/zoom - viewportPosition.x;
         result.y = result.y/zoom - viewportPosition.y;
+        result.size /= zoom;
 
         return result;
-    };
-
-
-    const zoomTo = (newZoom, center) => {
-        viewportPosition.x -= center.x / zoom;
-        viewportPosition.y -= center.y / zoom;
-
-        zoom = newZoom;
-
-        viewportPosition.x += center.x / zoom;
-        viewportPosition.y += center.y / zoom;
     };
 
     sceneContent = new Scene(render);
@@ -104,8 +97,7 @@ async function main()
     zoom_slider.oninput = function() {
         // Keep the view centered.
 
-        zoomTo(zoom_slider.value / zoom_slider.max, new Point(canvas.width / 2, canvas.height / 2));
-
+        sceneContent.zoomTo(zoom_slider.value / zoom_slider.max, new Point(canvas.width / 2, canvas.height / 2));
         render();
     };
 
@@ -134,7 +126,7 @@ async function main()
             delta += 1;
         }
 
-        zoomTo(zoom * delta, eventToUnzoomedPoint(ev));
+        sceneContent.zoomTo(sceneContent.getZoom() * delta, eventToUnzoomedPoint(ev));
         render();
     });
 
@@ -162,7 +154,7 @@ async function main()
             canvas.setPointerCapture(ev.pointerId);
         } else {
             stroke = null;
-            zoomGesture = new ZoomController(zoom);
+            zoomGesture = new ZoomController(sceneContent.getZoom());
             zoomGesture.onPointerMove(ev.pointerId, eventToUnzoomedPoint(ev));
         }
 
@@ -193,9 +185,11 @@ async function main()
             if (pointerCount >= Math.min(2, pointerDownCount)) {
                 let zoomCenter = zoomGesture.getCenter();
 
-                viewportPosition.x += (zoomCenter.x - oldZoomCenter.x) / zoom;
-                viewportPosition.y += (zoomCenter.y - oldZoomCenter.y) / zoom;
-                zoomTo(zoomGesture.update(), zoomCenter);
+                sceneContent.moveViewport(
+                    (zoomCenter.x - oldZoomCenter.x) / sceneContent.getZoom(),
+                    (zoomCenter.y - oldZoomCenter.y) / sceneContent.getZoom()
+                );
+                sceneContent.zoomTo(zoomGesture.update(), zoomCenter);
             }
         }
 
@@ -205,7 +199,6 @@ async function main()
     canvas.addEventListener("pointerup", (ev) => {
         ev.preventDefault();
 
-        // TODO: Send stroke to the server.
         if (stroke != null) {
             sceneContent.addStroke(stroke);
         } else {
@@ -227,6 +220,8 @@ async function main()
         ev.preventDefault();
     });
 
+
+    sceneContent.updateViewportSize(canvas.width, canvas.height);
     await sceneContent.updateLoop();
 }
 

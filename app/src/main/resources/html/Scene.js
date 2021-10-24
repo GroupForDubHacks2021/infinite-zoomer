@@ -7,6 +7,7 @@ import { Point } from "./Point.js";
  */
 
 const MIN_FETCH_INTERVAL_MS = 200;
+const ERR_PAUSE_BEFORE_RETRY_MS = 1500;
 
 class Scene {
     /**
@@ -26,6 +27,11 @@ class Scene {
     /// Do not directly modify the returned list.
     getElems() {
         return this.entities;
+    }
+
+    updateViewportSize(width, height) {
+        this.viewportWidth = width;
+        this.viewportHeight = height;
     }
 
     addStroke(stroke) {
@@ -49,13 +55,42 @@ class Scene {
         http.send(params);
     }
 
+    setZoom(zoom) {
+        this.zoom = zoom;
+    }
+
+    getZoom() {
+        return this.zoom;
+    }
+
+    zoomTo(newZoom, center) {
+        this.viewportPosition.x -= center.x / this.zoom;
+        this.viewportPosition.y -= center.y / this.zoom;
+
+        this.setZoom(newZoom);
+
+        this.viewportPosition.x += center.x / this.zoom;
+        this.viewportPosition.y += center.y / this.zoom;
+    }
+
+    moveViewport(deltaX, deltaY) {
+        this.viewportPosition.x += deltaX;
+        this.viewportPosition.y += deltaY;
+    }
+
     getServerData() {
         const zoom = this.zoom;
         const viewportPosition = this.viewportPosition;
 
+        let centerPosition = new Point(
+            viewportPosition.x + this.viewportWidth / 2,
+            viewportPosition.y + this.viewportHeight / 2
+        );
+        let radius = Math.max(this.viewportWidth / 2, this.viewportHeight / 2);
+
         return new Promise(function(resolve, reject){
             let http = new XMLHttpRequest();
-            let url = '/api?refresh:' + zoom + "," + viewportPosition.x + "," + viewportPosition.y;
+            let url = '/api?refresh:' + radius + "," + centerPosition.x + "," + centerPosition.y;
             http.open('GET', url, true);
 
             http.onreadystatechange = function(){//Call a function when the state changes.
@@ -71,12 +106,28 @@ class Scene {
         })
     }
 
+    async refreshScene() {
+        let serverTxt = await this.getServerData();
+        let strokes = serverTxt.split("S\n");
+        this.entities = [];
+
+        for (let strokeData of strokes) {
+            this.entities.push(new Stroke(strokeData));
+        }
+    }
+
     async updateLoop() {
         while (true) {
             // Wait some amount of time before syncing with the server.
             await awaitTimeout(MIN_FETCH_INTERVAL_MS);
 
-            // TODO: SYNC!!!
+            try {
+                await this.refreshScene();
+                this.render();
+            } catch (e) {
+                console.error("ERROR: Error fetching from server: ", e);
+                await awaitTimeout(ERR_PAUSE_BEFORE_RETRY_MS);
+            }
         }
     }
 }

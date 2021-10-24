@@ -68,6 +68,16 @@ public class Stroke extends SceneObject {
         updateBoundingCircle();
     }
 
+    public String serialize() {
+        StringBuilder result = new StringBuilder();
+
+        for (Line l : this.mLines) {
+            result.append(l.start.x).append(",").append(l.start.y).append(",").append(l.thickness).append('\n');
+        }
+
+        return result.toString();
+    }
+
     @Override
     public boolean isWithin(Circle r) {
         return r.intersects(mBoundingCircle);

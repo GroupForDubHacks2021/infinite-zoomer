@@ -28,6 +28,7 @@ public class ClientHandler extends Thread {
 
     private static final Pattern GET_REQUEST_PATTERN = Pattern.compile("^GET (.*) HTTP/1.1");
     private static final Pattern API_REQUEST_PATTERN = Pattern.compile("^GET /api\\?(.*) HTTP/1.1");
+    private static final Pattern API_POST_PATTERN = Pattern.compile("^POST /api\\?(.*) HTTP/1.1");
     private final Scanner mInput;
     private final PrintWriter mOutput;
     private final HTMLGUI mGui;
@@ -178,8 +179,15 @@ public class ClientHandler extends Thread {
             }
 
             Matcher matcher = API_REQUEST_PATTERN.matcher(request);
-            if (matcher.find()) {
+            if (!request.startsWith("POST") && matcher.find()) {
                 request = matcher.group(1);
+            }
+            else {
+                matcher = API_POST_PATTERN.matcher(request);
+
+                if (matcher.find()) {
+                    request = matcher.group(1);
+                }
             }
 
             String response = mGui.apiRequest(request, data.toString());
