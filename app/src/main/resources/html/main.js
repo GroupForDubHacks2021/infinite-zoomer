@@ -126,9 +126,10 @@ async function main()
         // zooming.
         ev.preventDefault();
 
-        if (pointerDownCount == 0) {
+        if (ev.isPrimary) {
             stroke = new Stroke();
             stroke.addPoint(eventToPoint(ev));
+            pointerDownCount = 0;
         } else {
             stroke = null;
             zoomGesture = new ZoomController(zoom);
