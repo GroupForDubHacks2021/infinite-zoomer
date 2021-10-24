@@ -24,4 +24,14 @@ public class HTMLGUI implements AbstractGUI {
     public void setModelChangedListener(Consumer<DrawingModel> listener) {
 
     }
+
+    public String apiRequest(String request, String data) {
+        if (request.startsWith("model?")) {
+            // TODO: Return model data.
+            System.out.println("Model request!");
+        }
+
+        System.out.println("API request!");
+        return "You sent for " + request + " with " + data;
+    }
 }
