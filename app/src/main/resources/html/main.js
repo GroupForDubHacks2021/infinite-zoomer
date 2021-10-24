@@ -130,7 +130,7 @@ async function main()
     canvas.addEventListener("wheel", (ev) => {
         ev.preventDefault();
 
-        let delta = ev.deltaY;
+        let delta = -ev.deltaY;
 
         if (ev.deltaMode == WHEEL_DELTA_MODE_LINE) {
             delta *= 3;
