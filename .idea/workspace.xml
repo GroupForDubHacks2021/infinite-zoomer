@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/model/Stroke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/gui/HTMLGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/Scene.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/Scene.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

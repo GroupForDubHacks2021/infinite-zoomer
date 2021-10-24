@@ -87,7 +87,7 @@ class Scene {
             viewportPosition.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
             viewportPosition.y  * this.zoom + this.viewportHeight / 2 * this.zoom
         );
-        let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom);
+        let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom) * 2.0;
 
         return new Promise(function(resolve, reject){
             let http = new XMLHttpRequest();

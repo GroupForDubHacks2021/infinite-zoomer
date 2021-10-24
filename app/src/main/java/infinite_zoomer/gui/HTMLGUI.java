@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 
 public class HTMLGUI implements AbstractGUI {
-    private static final Pattern MODEL_REQUEST_PATTERN = Pattern.compile("^refresh:(\\d+\\.?\\d*),(\\d+\\.?\\d*),(\\d+\\.?\\d*)");
+    private static final Pattern MODEL_REQUEST_PATTERN = Pattern.compile("^refresh:([-]?\\d+\\.?\\d*),([-]?\\d+\\.?\\d*),([-]?\\d+\\.?\\d*)");
 
     private final DrawingModel mModel;
 
