@@ -1,5 +1,10 @@
 "use strict";
 
+import { Stroke } from "./stroke.js";
+
+/// An async function that resolves after a short amount of time.
+/// It uses requestAnimationFrame, so the browser can make this take
+/// longer to complete if, say, the user isn't looking at the tab.
 function nextAnimationFrame()
 {
     return new Promise((resolve, reject) =>
@@ -19,10 +24,24 @@ async function main()
     function moveHandler(ev) {
 
     }
-    function init() {
-      let el=document.getElementById('target1');
-      el.onpointermove = moveHandler;
-    }
+
+    canvas.addEventListener("pointerdown", (ev) => {
+        // Do stuff with [ev] here.
+        // I think ev has a property called something like "primary".
+        // If ev.primary is false, then it's a secondary pointer (like the second
+        // finger in a two-finger pinch-zoom gesture).
+        //
+        // If it's a secondary pointer, we probably want to switch from drawing to
+        // zooming.
+    });
+
+    canvas.addEventListener("pointermove", (ev) => {
+
+    });
+
+    canvas.addEventListener("pointerup", (ev) => {
+
+    });
 
     while (true)
     {

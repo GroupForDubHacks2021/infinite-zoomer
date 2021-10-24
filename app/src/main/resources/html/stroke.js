@@ -1,0 +1,6 @@
+
+class Stroke {
+
+}
+
+export { Stroke };

@@ -36,6 +36,23 @@ public class ClientHandler extends Thread {
     }
 
     /**
+     * @param filename What we should try to detect the content type using.
+     */
+    private String getContentType(String filename) {
+        if (filename.endsWith("js")) {
+            return "text/javascript";
+        }
+        else if (filename.endsWith(".png")) {
+            return "image/png";
+        }
+        else if (filename.endsWith(".css")) {
+            return "text/css";
+        }
+
+        return "text/html";
+    }
+
+    /**
      * Sends a 200 OK response to the client or 404 ERROR
      * if the given file is null.
      *
@@ -57,7 +74,7 @@ public class ClientHandler extends Thread {
         }
 
         mOutput.println("HTTP/1.1 200 OK");
-        mOutput.println("Content-type: text/html");
+        mOutput.printf("Content-type: %s%n", getContentType(file.getName()));
         mOutput.printf("Content-length: %d%n", file.length() + 1);
         mOutput.println();
         mOutput.println();

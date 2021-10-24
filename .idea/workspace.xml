@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="084547ed-647a-48ec-9214-6f6961261f53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/stroke.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/html/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/infinite_zoomer/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/html/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/html/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
