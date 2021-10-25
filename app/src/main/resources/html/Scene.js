@@ -8,7 +8,7 @@ import { Stroke } from "./Stroke.js";
  */
 
 const MIN_FETCH_INTERVAL_MS = 200;
-const ERR_PAUSE_BEFORE_RETRY_MS = 1500;
+const ERR_PAUSE_BEFORE_RETRY_MS = 4500;
 
 class Scene {
     /**
@@ -122,6 +122,11 @@ class Scene {
     }
 
     async updateLoop() {
+        // If we're being hosted statically, just return.
+        if (window.location.href.indexOf("github.io") >= 0) {
+            return;
+        }
+
         while (true) {
             // Wait some amount of time before syncing with the server.
             await awaitTimeout(MIN_FETCH_INTERVAL_MS);
