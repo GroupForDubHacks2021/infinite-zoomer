@@ -21,6 +21,7 @@ async function main()
     let stroke = null;
 
     let sceneContent;
+    let penSize = 1;
 
     // Render everything!
     const render = () => {
@@ -94,12 +95,10 @@ async function main()
 
     sceneContent = new Scene(render);
 
-    zoom_slider.oninput = function() {
-        // Keep the view centered.
-
-        sceneContent.zoomTo(zoom_slider.value / zoom_slider.max, new Point(canvas.width / 2, canvas.height / 2));
-        render();
+    size_slider.oninput = function() {
+        penSize = size_slider.value;
     };
+    size_slider.value = penSize;
 
     canvas.addEventListener("wheel", (ev) => {
         ev.preventDefault();
@@ -176,6 +175,7 @@ async function main()
 
         if (stroke != null) {
             // We're drawing a stroke!
+            pointerLocation.size *= penSize;
             stroke.addPoint(pointerLocation);
         } else if (zoomGesture) {
             // We're zooming!

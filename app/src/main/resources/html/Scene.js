@@ -7,7 +7,7 @@ import { Stroke } from "./Stroke.js";
  * Handles storage/syncing of lines & other scene objects.
  */
 
-const MIN_FETCH_INTERVAL_MS = 200;
+const MIN_FETCH_INTERVAL_MS = 500;
 const ERR_PAUSE_BEFORE_RETRY_MS = 4500;
 
 class Scene {
@@ -111,14 +111,11 @@ class Scene {
     async refreshScene() {
         let serverTxt = await this.getServerData();
         let strokes = serverTxt.split(";;");
-        console.log(strokes.length);
         this.entities = [];
 
         for (let strokeData of strokes) {
             this.entities.push(new Stroke(strokeData));
         }
-
-        console.log("Refreshed!");
     }
 
     async updateLoop() {
