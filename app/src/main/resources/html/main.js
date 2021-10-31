@@ -9,11 +9,6 @@ const WHEEL_DELTA_MODE_LINE = 1;
 const WHEEL_DELTA_MODE_PAGE = 2;
 
 
-/// Get the scene for the current zoom (if it's changed).
-function getStrokes(viewportPosition, zoom) {
-
-}
-
 async function main()
 {
     const canvas = document.querySelector("#mainCanvas");

@@ -38,22 +38,24 @@ class Scene {
     addStroke(stroke) {
         this.entities.push(stroke);
 
-        var http = new XMLHttpRequest();
-        var url = '/api?addstroke';
-        var params = stroke.serialize()+ '\n';
-        http.open('POST', url, true);
+        if (this.haveBackend()) {
+            var http = new XMLHttpRequest();
+            var url = '/api?addstroke';
+            var params = stroke.serialize()+ '\n';
+            http.open('POST', url, true);
 
-        //Send the proper header information along with the request
-        http.setRequestHeader('Content-type', 'text/plain');
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'text/plain');
 
-        // TODO: May want to re-try on failure.
-        http.onreadystatechange = function() {//Call a function when the state changes.
-            if(http.readyState == 4 && http.status == 200) {
-                console.log("Added stroke: ", http.responseText);
-            }
-        };
+            // TODO: May want to re-try on failure.
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                if(http.readyState == 4 && http.status == 200) {
+                    console.log("Added stroke: ", http.responseText);
+                }
+            };
 
-        http.send(params);
+            http.send(params);
+        }
     }
 
     setZoom(zoom) {
@@ -80,6 +82,12 @@ class Scene {
     }
 
     getServerData() {
+        // If we're being hosted statically, we can't
+        // get data from the server.
+        if (!this.haveBackend()) {
+            return;
+        }
+
         const zoom = this.zoom;
         const sceneTranslation = this.sceneTranslation;
 
@@ -108,6 +116,11 @@ class Scene {
         })
     }
 
+    /// Return false iff we're being hosted statically.
+    haveBackend() {
+        return window.location.href.indexOf("github.io") != -1;
+    }
+
     async refreshScene() {
         let serverTxt = await this.getServerData();
         let strokes = serverTxt.split(";;");
@@ -120,7 +133,7 @@ class Scene {
 
     async updateLoop() {
         // If we're being hosted statically, just return.
-        if (window.location.href.indexOf("github.io") >= 0) {
+        if (!this.haveBackend()) {
             return;
         }
 
