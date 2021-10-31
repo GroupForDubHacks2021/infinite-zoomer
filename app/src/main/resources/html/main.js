@@ -140,6 +140,11 @@ async function main()
         // zooming.
         ev.preventDefault();
 
+        if (pointerDownCount < 0) {
+            pointerDownCount = 0;
+            console.warn("Error! Negative pointer count!");
+        }
+
         const shouldMousePan = ev.pointerType == "mouse" && ev.button == 2;
 
         if (pointerDownCount == 0 && !shouldMousePan) {
@@ -195,14 +200,17 @@ async function main()
     canvas.addEventListener("pointerup", (ev) => {
         ev.preventDefault();
 
-        if (stroke != null) {
-            sceneContent.addStroke(stroke);
-        } else {
-            zoomGesture = null;
+        try {
+            if (stroke != null) {
+                sceneContent.addStroke(stroke);
+            } else {
+                zoomGesture = null;
+            }
         }
-
-        stroke = null;
-        pointerDownCount --;
+        finally {
+            stroke = null;
+            pointerDownCount --;
+        }
 
         render();
     }, false);
@@ -212,6 +220,10 @@ async function main()
         canvas.releasePointerCapture(ev.pointerId);
         pointerDownCount --;
     }, false);
+
+    canvas.addEventListener("pointerleave", (ev) => {
+        pointerDownCount --;
+    });
 
     canvas.addEventListener("contextmenu", (ev) => {
         ev.preventDefault();
