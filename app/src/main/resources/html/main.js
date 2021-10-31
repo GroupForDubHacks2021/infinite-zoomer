@@ -146,10 +146,11 @@ async function main()
         // zooming.
         ev.preventDefault();
 
-        if (ev.isPrimary && !(ev.pointerType == "mouse" && ev.button == 2)) {
+        const shouldMousePan = ev.pointerType == "mouse" && ev.button == 2;
+
+        if (pointerDownCount == 0 && !shouldMousePan) {
             stroke = new Stroke();
             stroke.addPoint(eventToPoint(ev));
-            pointerDownCount = 0;
 
             canvas.setPointerCapture(ev.pointerId);
         } else {
@@ -176,7 +177,7 @@ async function main()
         if (stroke != null) {
             // We're drawing a stroke!
             stroke.addPoint(pointerLocation);
-        } else {
+        } else if (zoomGesture) {
             // We're zooming!
             let oldZoomCenter = zoomGesture.getCenter();
             let pointerCount = zoomGesture.getPointerCount();
@@ -214,6 +215,7 @@ async function main()
     canvas.addEventListener("pointercancel", (ev) => {
         ev.preventDefault();
         canvas.releasePointerCapture(ev.pointerId);
+        pointerDownCount --;
     }, false);
 
     canvas.addEventListener("contextmenu", (ev) => {
