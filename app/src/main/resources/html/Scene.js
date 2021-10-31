@@ -18,7 +18,7 @@ class Scene {
         // If we call this.render(), we'll re-render.
         this.render = renderCallback;
         this.zoom = 1;
-        this.viewportPosition = new Point(0, 0);
+        this.sceneTranslation = new Point(0, 0);
 
         // List of all scene objects we know about.
         this.entities = [];
@@ -65,27 +65,27 @@ class Scene {
     }
 
     zoomTo(newZoom, center) {
-        this.viewportPosition.x -= center.x / this.zoom;
-        this.viewportPosition.y -= center.y / this.zoom;
+        this.sceneTranslation.x -= center.x / this.zoom;
+        this.sceneTranslation.y -= center.y / this.zoom;
 
         this.setZoom(newZoom);
 
-        this.viewportPosition.x += center.x / this.zoom;
-        this.viewportPosition.y += center.y / this.zoom;
+        this.sceneTranslation.x += center.x / this.zoom;
+        this.sceneTranslation.y += center.y / this.zoom;
     }
 
     moveViewport(deltaX, deltaY) {
-        this.viewportPosition.x += deltaX;
-        this.viewportPosition.y += deltaY;
+        this.sceneTranslation.x -= deltaX;
+        this.sceneTranslation.y -= deltaY;
     }
 
     getServerData() {
         const zoom = this.zoom;
-        const viewportPosition = this.viewportPosition;
+        const sceneTranslation = this.sceneTranslation;
 
         let centerPosition = new Point(
-            viewportPosition.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
-            viewportPosition.y  * this.zoom + this.viewportHeight / 2 * this.zoom
+            sceneTranslation.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
+            sceneTranslation.y  * this.zoom + this.viewportHeight / 2 * this.zoom
         );
         let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom) * 2.0;
 

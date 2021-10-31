@@ -35,13 +35,13 @@ async function main()
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const zoom = sceneContent.getZoom();
-        const viewportPosition = sceneContent.viewportPosition;
+        const sceneTranslation = sceneContent.sceneTranslation;
 
         let transform = (point) => {
             // TODO: Transform point based on current zoom, position, etc.
 
-            point.x += viewportPosition.x;
-            point.y += viewportPosition.y;
+            point.x += sceneTranslation.x;
+            point.y += sceneTranslation.y;
             point.x *= zoom;
             point.y *= zoom;
             point.size *= zoom;
@@ -82,12 +82,12 @@ async function main()
         // Get location of the target element (our canvas)
         const bbox = canvas.getBoundingClientRect();
         const zoom = sceneContent.getZoom();
-        const viewportPosition = sceneContent.viewportPosition;
+        const sceneTranslation = sceneContent.sceneTranslation;
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        result.x = result.x/zoom - viewportPosition.x;
-        result.y = result.y/zoom - viewportPosition.y;
+        result.x = result.x/zoom - sceneTranslation.x;
+        result.y = result.y/zoom - sceneTranslation.y;
         result.size /= zoom;
 
         return result;
@@ -187,8 +187,8 @@ async function main()
                 let zoomCenter = zoomGesture.getCenter();
 
                 sceneContent.moveViewport(
-                    (zoomCenter.x - oldZoomCenter.x) / sceneContent.getZoom(),
-                    (zoomCenter.y - oldZoomCenter.y) / sceneContent.getZoom()
+                    -(zoomCenter.x - oldZoomCenter.x) / sceneContent.getZoom(),
+                    -(zoomCenter.y - oldZoomCenter.y) / sceneContent.getZoom()
                 );
                 sceneContent.zoomTo(zoomGesture.update(), zoomCenter);
             }
