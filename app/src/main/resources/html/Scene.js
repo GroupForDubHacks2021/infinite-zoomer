@@ -118,7 +118,7 @@ class Scene {
 
     /// Return false iff we're being hosted statically.
     haveBackend() {
-        return window.location.href.indexOf("github.io") != -1;
+        return window.location.href.indexOf("github.io") == -1;
     }
 
     async refreshScene() {
