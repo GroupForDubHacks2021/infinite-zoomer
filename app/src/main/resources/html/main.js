@@ -70,8 +70,8 @@ async function main()
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        const x = event.clientX - bbox.left;
-        const y = event.clientY - bbox.top;
+        const x = ev.clientX - bbox.left;
+        const y = ev.clientY - bbox.top;
 
         return new Point(x, y, (ev.pressure || 0.5));
     };
