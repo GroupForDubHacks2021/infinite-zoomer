@@ -115,7 +115,7 @@ public class Stroke extends SceneObject {
         }
     }
 
-    public List<Line> getmLines() {
+    public List<Line> getLines() {
         return this.mLines;
     }
 }
