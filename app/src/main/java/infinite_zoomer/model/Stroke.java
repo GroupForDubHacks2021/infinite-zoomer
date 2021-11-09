@@ -68,6 +68,12 @@ public class Stroke extends SceneObject {
         updateBoundingCircle();
     }
 
+    public Stroke(List<Line> mLines) {
+        this.mLines = mLines;
+        Point2D lastPoint = mLines.get(mLines.size() - 1).end;
+        updateBoundingCircle();
+    }
+
     public String serialize() {
         StringBuilder result = new StringBuilder();
 
@@ -107,5 +113,9 @@ public class Stroke extends SceneObject {
                 mBoundingCircle = mBoundingCircle.unite(l.getBoundingCircle());
             }
         }
+    }
+
+    public List<Line> getmLines() {
+        return this.mLines;
     }
 }

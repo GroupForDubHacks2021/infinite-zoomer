@@ -1,5 +1,7 @@
 "use strict";
 
+//main renders, scene adjusts the viewpoint/objects that should be rendered.
+
 import { Stroke } from "./Stroke.js";
 import { Point } from "./Point.js";
 import { ZoomController } from "./ZoomController.js";
@@ -54,7 +56,7 @@ async function main()
 
         // Render all elements!
         for (const elem of sceneContent.getElems()) {
-            elem.render(ctx, transform);
+            elem.render(ctx, transform)
         }
 
         // Render the current stroke, too

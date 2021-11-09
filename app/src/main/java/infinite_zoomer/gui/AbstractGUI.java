@@ -7,4 +7,5 @@ import java.util.function.Consumer;
 public interface AbstractGUI {
     void render();
     void setModelChangedListener(Consumer<DrawingModel> listener);
+    void update();
 }
