@@ -49,7 +49,7 @@ public class PaintCanvas extends JComponent {
                 n_y = m.getY();
 
                 graphics.drawLine(o_x, o_y, n_x, n_y);
-                currSerializedStroke.add(new Line(new Point2D(o_x, o_y), new Point2D(n_x, n_y), new infinite_zoomer.model.Color(0.0f, 0.0f, 0.0f, 1.0f), 0.1));
+                currSerializedStroke.add(new Line(new Point2D(o_x, o_y), new Point2D(n_x, n_y), new infinite_zoomer.model.Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0));
 
                 //updates canvas
                 repaint();
@@ -65,8 +65,7 @@ public class PaintCanvas extends JComponent {
             public void mouseReleased(MouseEvent m) {
                 mModel.addObject(new Stroke(currSerializedStroke));
                 mModel.getListener().update();
-                //TODO: need to clear line, but have to WAIT for update
-//                currSerializedStroke.clear();
+                currSerializedStroke.clear();
             }
         });
     }
@@ -96,20 +95,13 @@ public class PaintCanvas extends JComponent {
         repaint();
     }
 
-//    public void jsUpdate(ContainerNode container) {
-//        List<Stroke> objects = new ArrayList<Stroke>();
-//        for (SceneObject object: container) {
-//
-//        }
-//    }
-
     public void update() {
         Circle boundingCircle = new Circle(center, Math.sqrt(2 * 600));
         ContainerNode container = mModel.getContainerForRegion(boundingCircle);
         List<SceneObject> strokes = container.getLeavesInRegion(boundingCircle);
         for (SceneObject stroke: strokes) {
             if (stroke instanceof Stroke) {
-                for (Line line: ((Stroke) stroke).getmLines()) {
+                for (Line line: ((Stroke) stroke).getLines()) {
                     //TODO: resolve cast to int?
                     graphics.drawLine((int) line.start.x, (int) line.start.y, (int) line.end.x, (int) line.end.y);
                 }

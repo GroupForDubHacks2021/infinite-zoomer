@@ -69,7 +69,7 @@ public class Stroke extends SceneObject {
     }
 
     public Stroke(List<Line> mLines) {
-        this.mLines = mLines;
+        this.mLines = (ArrayList) ((ArrayList) mLines).clone();
         Point2D lastPoint = mLines.get(mLines.size() - 1).end;
         updateBoundingCircle();
     }
@@ -115,7 +115,7 @@ public class Stroke extends SceneObject {
         }
     }
 
-    public List<Line> getmLines() {
+    public List<Line> getLines() {
         return this.mLines;
     }
 }

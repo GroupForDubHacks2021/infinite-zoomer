@@ -27,7 +27,7 @@ public class SwingGUI implements AbstractGUI {
     public void initialize() {
         //set options
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 600);
+        frame.setSize(1650, 1080);
         frame.add(canvas);
         frame.setVisible(true);
     }

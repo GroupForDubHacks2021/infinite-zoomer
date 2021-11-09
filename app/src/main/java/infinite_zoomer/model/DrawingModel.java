@@ -18,19 +18,19 @@ import java.util.function.Consumer;
  */
 public class DrawingModel {
     private ContainerNode mRoot;
-    private updateListener listener;
+    private UpdateListener listener;
 
     public DrawingModel() {
         mRoot = new ContainerNode();
-        listener = new updateListener();
+        listener = new UpdateListener();
     }
 
     //updates GUI's when called
     //TODO: resolve if it should be static or not (?)
-    public class updateListener {
+    public static class UpdateListener {
         private List<AbstractGUI> listeners;
 
-        public updateListener() {
+        public UpdateListener() {
             this.listeners = new ArrayList<AbstractGUI>();
         }
 
@@ -89,7 +89,7 @@ public class DrawingModel {
         container.addChild(object);
     }
 
-    public updateListener getListener() {
+    public UpdateListener getListener() {
         return this.listener;
     }
 }

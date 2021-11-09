@@ -52,7 +52,7 @@ async function main()
 
         // Render all elements!
         for (const elem of sceneContent.getElems()) {
-            elem.render(ctx, transform)
+            elem.render(ctx, transform);
         }
 
         // Render the current stroke, too
