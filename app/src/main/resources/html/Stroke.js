@@ -66,6 +66,12 @@ class Stroke {
                 ctx.moveTo(lastPoint.x, lastPoint.y);
                 ctx.lineTo(point.x, point.y);
                 ctx.stroke();
+
+                // Draw a circle at the current point. This makes the
+                // stroke look less blocky.
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, point.size / 2, 0, Math.PI * 2.0);
+                ctx.fill();
             }
 
             lastPoint = point;

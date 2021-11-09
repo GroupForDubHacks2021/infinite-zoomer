@@ -7,8 +7,8 @@ import { Stroke } from "./Stroke.js";
  * Handles storage/syncing of lines & other scene objects.
  */
 
-const MIN_FETCH_INTERVAL_MS = 200;
-const ERR_PAUSE_BEFORE_RETRY_MS = 1500;
+const MIN_FETCH_INTERVAL_MS = 500;
+const ERR_PAUSE_BEFORE_RETRY_MS = 4500;
 
 class Scene {
     /**
@@ -18,7 +18,7 @@ class Scene {
         // If we call this.render(), we'll re-render.
         this.render = renderCallback;
         this.zoom = 1;
-        this.viewportPosition = new Point(0, 0);
+        this.sceneTranslation = new Point(0, 0);
 
         // List of all scene objects we know about.
         this.entities = [];
@@ -38,22 +38,24 @@ class Scene {
     addStroke(stroke) {
         this.entities.push(stroke);
 
-        var http = new XMLHttpRequest();
-        var url = '/api?addstroke';
-        var params = stroke.serialize()+ '\n';
-        http.open('POST', url, true);
+        if (this.haveBackend()) {
+            var http = new XMLHttpRequest();
+            var url = '/api?addstroke';
+            var params = stroke.serialize()+ '\n';
+            http.open('POST', url, true);
 
-        //Send the proper header information along with the request
-        http.setRequestHeader('Content-type', 'text/plain');
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'text/plain');
 
-        // TODO: May want to re-try on failure.
-        http.onreadystatechange = function() {//Call a function when the state changes.
-            if(http.readyState == 4 && http.status == 200) {
-                console.log("Added stroke: ", http.responseText);
-            }
-        };
+            // TODO: May want to re-try on failure.
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                if(http.readyState == 4 && http.status == 200) {
+                    console.log("Added stroke: ", http.responseText);
+                }
+            };
 
-        http.send(params);
+            http.send(params);
+        }
     }
 
     setZoom(zoom) {
@@ -65,27 +67,33 @@ class Scene {
     }
 
     zoomTo(newZoom, center) {
-        this.viewportPosition.x -= center.x / this.zoom;
-        this.viewportPosition.y -= center.y / this.zoom;
+        this.sceneTranslation.x -= center.x / this.zoom;
+        this.sceneTranslation.y -= center.y / this.zoom;
 
         this.setZoom(newZoom);
 
-        this.viewportPosition.x += center.x / this.zoom;
-        this.viewportPosition.y += center.y / this.zoom;
+        this.sceneTranslation.x += center.x / this.zoom;
+        this.sceneTranslation.y += center.y / this.zoom;
     }
 
     moveViewport(deltaX, deltaY) {
-        this.viewportPosition.x += deltaX;
-        this.viewportPosition.y += deltaY;
+        this.sceneTranslation.x -= deltaX;
+        this.sceneTranslation.y -= deltaY;
     }
 
     getServerData() {
+        // If we're being hosted statically, we can't
+        // get data from the server.
+        if (!this.haveBackend()) {
+            return;
+        }
+
         const zoom = this.zoom;
-        const viewportPosition = this.viewportPosition;
+        const sceneTranslation = this.sceneTranslation;
 
         let centerPosition = new Point(
-            viewportPosition.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
-            viewportPosition.y  * this.zoom + this.viewportHeight / 2 * this.zoom
+            sceneTranslation.x  * this.zoom + this.viewportWidth / 2 * this.zoom,
+            sceneTranslation.y  * this.zoom + this.viewportHeight / 2 * this.zoom
         );
         let radius = Math.max(this.viewportWidth / 2 * this.zoom, this.viewportHeight / 2 * this.zoom) * 2.0;
 
@@ -108,20 +116,27 @@ class Scene {
         })
     }
 
+    /// Return false iff we're being hosted statically.
+    haveBackend() {
+        return window.location.href.indexOf("github.io") == -1;
+    }
+
     async refreshScene() {
         let serverTxt = await this.getServerData();
         let strokes = serverTxt.split(";;");
-        console.log(strokes.length);
         this.entities = [];
 
         for (let strokeData of strokes) {
             this.entities.push(new Stroke(strokeData));
         }
-
-        console.log("Refreshed!");
     }
 
     async updateLoop() {
+        // If we're being hosted statically, just return.
+        if (!this.haveBackend()) {
+            return;
+        }
+
         while (true) {
             // Wait some amount of time before syncing with the server.
             await awaitTimeout(MIN_FETCH_INTERVAL_MS);

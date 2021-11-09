@@ -11,11 +11,6 @@ const WHEEL_DELTA_MODE_LINE = 1;
 const WHEEL_DELTA_MODE_PAGE = 2;
 
 
-/// Get the scene for the current zoom (if it's changed).
-function getStrokes(viewportPosition, zoom) {
-
-}
-
 async function main()
 {
     const canvas = document.querySelector("#mainCanvas");
@@ -23,6 +18,7 @@ async function main()
     let stroke = null;
 
     let sceneContent;
+    let penSize = 1;
 
     // Render everything!
     const render = () => {
@@ -36,13 +32,13 @@ async function main()
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const zoom = sceneContent.getZoom();
-        const viewportPosition = sceneContent.viewportPosition;
+        const sceneTranslation = sceneContent.sceneTranslation;
 
         let transform = (point) => {
             // TODO: Transform point based on current zoom, position, etc.
 
-            point.x += viewportPosition.x;
-            point.y += viewportPosition.y;
+            point.x += sceneTranslation.x;
+            point.y += sceneTranslation.y;
             point.x *= zoom;
             point.y *= zoom;
             point.size *= zoom;
@@ -71,8 +67,8 @@ async function main()
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        const x = event.clientX - bbox.left;
-        const y = event.clientY - bbox.top;
+        const x = ev.clientX - bbox.left;
+        const y = ev.clientY - bbox.top;
 
         return new Point(x, y, (ev.pressure || 0.5));
     };
@@ -83,12 +79,12 @@ async function main()
         // Get location of the target element (our canvas)
         const bbox = canvas.getBoundingClientRect();
         const zoom = sceneContent.getZoom();
-        const viewportPosition = sceneContent.viewportPosition;
+        const sceneTranslation = sceneContent.sceneTranslation;
 
         // x is in page coordinates, so we need to subtract the
         // canvas' distance from the left of the page
-        result.x = result.x/zoom - viewportPosition.x;
-        result.y = result.y/zoom - viewportPosition.y;
+        result.x = result.x/zoom - sceneTranslation.x;
+        result.y = result.y/zoom - sceneTranslation.y;
         result.size /= zoom;
 
         return result;
@@ -96,12 +92,10 @@ async function main()
 
     sceneContent = new Scene(render);
 
-    zoom_slider.oninput = function() {
-        // Keep the view centered.
-
-        sceneContent.zoomTo(zoom_slider.value / zoom_slider.max, new Point(canvas.width / 2, canvas.height / 2));
-        render();
+    size_slider.oninput = function() {
+        penSize = size_slider.value;
     };
+    size_slider.value = penSize;
 
     canvas.addEventListener("wheel", (ev) => {
         ev.preventDefault();
@@ -148,10 +142,16 @@ async function main()
         // zooming.
         ev.preventDefault();
 
-        if (ev.isPrimary && !(ev.pointerType == "mouse" && ev.button == 2)) {
+        if (pointerDownCount < 0) {
+            pointerDownCount = 0;
+            console.warn("Error! Negative pointer count!");
+        }
+
+        const shouldMousePan = ev.pointerType == "mouse" && ev.button == 2;
+
+        if (pointerDownCount == 0 && !shouldMousePan) {
             stroke = new Stroke();
             stroke.addPoint(eventToPoint(ev));
-            pointerDownCount = 0;
 
             canvas.setPointerCapture(ev.pointerId);
         } else {
@@ -177,8 +177,9 @@ async function main()
 
         if (stroke != null) {
             // We're drawing a stroke!
+            pointerLocation.size *= penSize;
             stroke.addPoint(pointerLocation);
-        } else {
+        } else if (zoomGesture) {
             // We're zooming!
             let oldZoomCenter = zoomGesture.getCenter();
             let pointerCount = zoomGesture.getPointerCount();
@@ -188,8 +189,8 @@ async function main()
                 let zoomCenter = zoomGesture.getCenter();
 
                 sceneContent.moveViewport(
-                    (zoomCenter.x - oldZoomCenter.x) / sceneContent.getZoom(),
-                    (zoomCenter.y - oldZoomCenter.y) / sceneContent.getZoom()
+                    -(zoomCenter.x - oldZoomCenter.x) / sceneContent.getZoom(),
+                    -(zoomCenter.y - oldZoomCenter.y) / sceneContent.getZoom()
                 );
                 sceneContent.zoomTo(zoomGesture.update(), zoomCenter);
             }
@@ -201,14 +202,17 @@ async function main()
     canvas.addEventListener("pointerup", (ev) => {
         ev.preventDefault();
 
-        if (stroke != null) {
-            sceneContent.addStroke(stroke);
-        } else {
-            zoomGesture = null;
+        try {
+            if (stroke != null) {
+                sceneContent.addStroke(stroke);
+            } else {
+                zoomGesture = null;
+            }
         }
-
-        stroke = null;
-        pointerDownCount --;
+        finally {
+            stroke = null;
+            pointerDownCount --;
+        }
 
         render();
     }, false);
@@ -216,7 +220,12 @@ async function main()
     canvas.addEventListener("pointercancel", (ev) => {
         ev.preventDefault();
         canvas.releasePointerCapture(ev.pointerId);
+        pointerDownCount --;
     }, false);
+
+    canvas.addEventListener("pointerleave", (ev) => {
+        pointerDownCount --;
+    });
 
     canvas.addEventListener("contextmenu", (ev) => {
         ev.preventDefault();
