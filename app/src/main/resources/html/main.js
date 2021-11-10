@@ -1,5 +1,7 @@
 "use strict";
 
+//main renders, scene adjusts the viewpoint/objects that should be rendered.
+
 import { Stroke } from "./Stroke.js";
 import { Point } from "./Point.js";
 import { ZoomController } from "./ZoomController.js";

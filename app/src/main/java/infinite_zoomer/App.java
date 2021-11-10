@@ -3,10 +3,12 @@
  */
 package infinite_zoomer;
 
+import infinite_zoomer.gui.AbstractGUI;
 import infinite_zoomer.gui.HTMLGUI;
 import infinite_zoomer.gui.SwingGUI;
 import infinite_zoomer.model.DrawingModel;
 import infinite_zoomer.server.HTMLServer;
+import infinite_zoomer.model.DrawingModel.UpdateListener;
 
 public class App {
     public static void main(String[] args) {
@@ -16,7 +18,9 @@ public class App {
 
         System.out.printf("Running the server! Go to http://localhost:%d/ !%n", server.getPort());
 
-        var gui = new SwingGUI();
-        //gui.initialize();
+        var gui = new SwingGUI(model);
+        UpdateListener listener = new UpdateListener();
+        listener.addListener(gui);
+        gui.initialize();
     }
 }

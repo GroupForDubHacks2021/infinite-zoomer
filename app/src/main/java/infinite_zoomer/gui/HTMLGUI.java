@@ -34,6 +34,11 @@ public class HTMLGUI implements AbstractGUI {
 
     }
 
+    @Override
+    public void update() {
+
+    }
+
     /**
      * Converts the region of this' model for a specific request
      * to a machine-readable string.
@@ -55,6 +60,8 @@ public class HTMLGUI implements AbstractGUI {
 
         // TODO: Get points.
         ContainerNode container = mModel.getContainerForRegion(c);
+
+
 
         for (SceneObject s : container.getLeavesInRegion(c)) {
             // TODO: Handle non-strokes
