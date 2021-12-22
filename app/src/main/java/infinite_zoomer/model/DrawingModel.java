@@ -74,17 +74,14 @@ public class DrawingModel {
         current = parent;
 
         return current;*/
-        listener.update();
         return mRoot;
     }
 
     public ContainerNode getContainerForRegion(Rectangle region) {
-        listener.update();
         return getContainerForRegion(region.getBoundingCircle());
     }
 
     public void addObject(SceneObject object) {
-        listener.update();
         ContainerNode container = getContainerForRegion(object.getBoundingCircle());
         container.addChild(object);
     }
