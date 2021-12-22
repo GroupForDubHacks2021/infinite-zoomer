@@ -19,7 +19,7 @@ public class App {
         System.out.printf("Running the server! Go to http://localhost:%d/ !%n", server.getPort());
 
         var gui = new SwingGUI(model);
-        UpdateListener listener = new UpdateListener();
+        UpdateListener listener = model.getListener();
         listener.addListener(gui);
         gui.initialize();
     }

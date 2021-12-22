@@ -7,6 +7,7 @@ import infinite_zoomer.model.Stroke;
 import infinite_zoomer.model.geometry.Circle;
 import infinite_zoomer.model.geometry.Point2D;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,10 @@ public class HTMLGUI implements AbstractGUI {
         else if (request.startsWith("addstroke")) {
             Stroke stroke = new Stroke(data);
             mModel.addObject(stroke);
+//            long start = System.nanoTime();
+            mModel.getListener().update();
+//            long end = System.nanoTime();
+//            System.out.println("time between updating: " + TimeUnit.NANOSECONDS.toMillis(end - start));
             return "OKAY!";
         }
 

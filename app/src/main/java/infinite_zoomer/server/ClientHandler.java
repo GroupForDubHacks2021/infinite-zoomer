@@ -151,7 +151,7 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         String request = mInput.nextLine().trim();
-        System.out.printf("Got a request: %s%n", request);
+//        System.out.printf("Got a request: %s%n", request);
 
         if (request.startsWith("GET /") && !request.startsWith("GET /api?")) {
             sendFile(getFile(request));
